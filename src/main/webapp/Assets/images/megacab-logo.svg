@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+  <!-- Background shape -->
+  <rect x="10" y="20" width="280" height="60" rx="30" ry="30" fill="#2C3E50" />
+  
+  <!-- Taxi icon -->
+  <g transform="translate(40, 35) scale(0.9)">
+    <!-- Car body -->
+    <rect x="5" y="15" width="50" height="25" rx="5" ry="5" fill="#FF6B00" />
+    
+    <!-- Car top -->
+    <path d="M15,15 L20,0 H40 L45,15" fill="#FF6B00" />
+    
+    <!-- Windows -->
+    <rect x="18" y="5" width="24" height="10" rx="2" ry="2" fill="#F8F9FA" />
+    
+    <!-- Wheels -->
+    <circle cx="15" cy="40" r="7" fill="#1A1A1A" />
+    <circle cx="15" cy="40" r="3" fill="#6C757D" />
+    <circle cx="45" cy="40" r="7" fill="#1A1A1A" />
+    <circle cx="45" cy="40" r="3" fill="#6C757D" />
+    
+    <!-- Taxi sign -->
+    <rect x="23" y="0" width="14" height="8" rx="2" ry="2" fill="#FFD700" />
+    
+    <!-- Headlight -->
+    <rect x="55" y="20" width="5" height="8" rx="2" ry="2" fill="#F8F9FA" />
+    
+    <!-- Grill -->
+    <rect x="0" y="25" width="5" height="10" rx="1" ry="1" fill="#1A1A1A" />
+  </g>
+  
+  <!-- Text: "Mega" -->
+  <text x="110" y="60" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="#FFFFFF">Mega</text>
+  
+  <!-- Text: "Cab" -->
+  <text x="200" y="60" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="#FF6B00">Cab</text>
+  
+  <!-- Tagline -->
+  <text x="113" y="75" font-family="Poppins, sans-serif" font-size="12" font-weight="300" fill="#F8F9FA">Your Ride, Your Way</text>
+  
+  <!-- Speed lines -->
+  <line x1="240" y1="40" x2="260" y2="40" stroke="#FF6B00" stroke-width="3" stroke-linecap="round" />
+  <line x1="245" y1="48" x2="265" y2="48" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" />
+  <line x1="250" y1="56" x2="270" y2="56" stroke="#FF6B00" stroke-width="1" stroke-linecap="round" />
+</svg>
