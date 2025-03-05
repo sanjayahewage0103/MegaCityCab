@@ -29,6 +29,7 @@ public class AdminLoginServlet extends HttpServlet {
             session.setAttribute("admin", username); // Store admin username in session
             response.sendRedirect("admin-dashboard.jsp?message=Admin login successful!");
         } else {
+            // Redirect back to the login page with an error message
             response.sendRedirect("admin-login.jsp?error=Invalid admin credentials.");
         }
     }
