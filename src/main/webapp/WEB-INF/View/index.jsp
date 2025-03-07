@@ -380,7 +380,7 @@
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo" onerror="this.src='/api/placeholder/80/40'; this.onerror=null;">
+            <img src="../../Assets/images/megacab-logo.svg" alt="MegaCab Logo" onerror="this.src='/api/placeholder/80/40'; this.onerror=null;">
             Mega<span>Cab</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -407,7 +407,7 @@
                     </a>
                     <div class="profile-dropdown-content">
                         <a href="login.jsp"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
-                        <a href="register.jsp"><i class="fas fa-user-plus me-2"></i>Sign Up</a>
+                        <a href="manage-drivers.jsp"><i class="fas fa-user-plus me-2"></i>Sign Up</a>
                     </div>
                 </li>
             </ul>
@@ -432,7 +432,7 @@
             </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-            <img src="Assets/images/home.png" alt="Cab Service Illustration" class="vehicle-img"
+            <img src="../../Assets/images/home.png" alt="Cab Service Illustration" class="vehicle-img"
                  onerror="this.src='/api/placeholder/400/300'; this.onerror=null;">
         </div>
     </div>
@@ -455,7 +455,7 @@
             </p>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-            <img src="Assets/images/about.png" alt="About Mega City Cab" class="vehicle-img"
+            <img src="../../Assets/images/about.png" alt="About Mega City Cab" class="vehicle-img"
                  onerror="this.src='/api/placeholder/400/300'; this.onerror=null;">
         </div>
     </div>
@@ -467,7 +467,7 @@
     <div class="row g-4">
         <div class="col-md-4" data-aos="fade-up" data-aos-duration="800">
             <div class="service-card text-center">
-                <img src="Assets/images/sedan.png" alt="Sedan"
+                <img src="../../Assets/images/sedan.png" alt="Sedan"
                      onerror="this.src='/api/placeholder/400/200'; this.onerror=null;">
                 <h5>Premium Sedan</h5>
                 <p>Luxurious and comfortable rides for up to 4 passengers with ample luggage space.</p>
@@ -475,7 +475,7 @@
         </div>
         <div class="col-md-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
             <div class="service-card text-center">
-                <img src="Assets/images/suv.png" alt="SUV"
+                <img src="../../Assets/images/suv.png" alt="SUV"
                      onerror="this.src='/api/placeholder/400/200'; this.onerror=null;">
                 <h5>Spacious SUV</h5>
                 <p>Perfect for families or small groups seeking comfort and extra luggage capacity.</p>
@@ -483,7 +483,7 @@
         </div>
         <div class="col-md-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
             <div class="service-card text-center">
-                <img src="Assets/images/van.png" alt="Van"
+                <img src="../../Assets/images/van.png" alt="Van"
                      onerror="this.src='/api/placeholder/400/200'; this.onerror=null;">
                 <h5>Luxury Van</h5>
                 <p>Ideal for group travel, corporate outings, or airport transfers with ample space.</p>

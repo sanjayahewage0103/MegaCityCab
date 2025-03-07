@@ -320,7 +320,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="sidebar-logo">
-        <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+        <img src="../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
         <span>Mega<em>Cab</em></span>
     </div>
     <h6 class="text-center mb-4" style="color: var(--primary);">Admin Dashboard</h6>
@@ -353,8 +353,8 @@
             </h2>
             <div id="vehicleMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-plus"></i>Add New Car</a>
-                    <a href="#"><i class="fas fa-list"></i>Manage Cars</a>
+                    <a href="manage-vehicles.jsp"><i class="fas fa-plus"></i>Add New Car</a>
+                    <a href="manage-vehicles.jsp"><i class="fas fa-list"></i>Manage Cars</a>
                 </div>
             </div>
         </div>
@@ -370,8 +370,8 @@
             </h2>
             <div id="driverMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-list"></i>Manage Driver</a>
-                    <a href="#"><i class="fas fa-user-plus"></i>Add New Driver</a>
+                    <a href="manage-driver"><i class="fas fa-list"></i>Manage Driver</a>
+                    <a href="add-driver.jsp"><i class="fas fa-user-plus"></i>Add New Driver</a>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
             </h2>
             <div id="customerMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-list"></i>Manage Customer</a>
+                    <a href="view-customers.jsp"><i class="fas fa-list"></i>Manage Customer</a>
                 </div>
             </div>
         </div>

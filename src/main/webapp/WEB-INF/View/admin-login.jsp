@@ -244,7 +244,7 @@
   <!-- Left side - Welcome and Illustration -->
   <div class="admin-login-left">
     <div class="admin-login-logo">
-      <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+      <img src="../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
       <span>Mega<em>Cab</em></span>
     </div>
     <div class="admin-login-headline">

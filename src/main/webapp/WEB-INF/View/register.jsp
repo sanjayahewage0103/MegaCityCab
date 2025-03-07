@@ -1,16 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: pethu
-  Date: 3/2/2025
-  Time: 9:43 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MegaCab - Login</title>
+    <title>MegaCab - Register</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,14 +55,14 @@
             transform: translateY(-2px);
         }
 
-        .login-container {
+        .register-container {
             height: 100vh;
             max-width: 100vw;
             display: flex;
             overflow: hidden;
         }
 
-        .login-left {
+        .register-left {
             position: relative;
             flex: 1;
             background-color: #f9f4ef;
@@ -80,7 +74,7 @@
             overflow: hidden;
         }
 
-        .login-left::after {
+        .register-left::after {
             content: "";
             position: absolute;
             right: -100px;
@@ -91,7 +85,7 @@
             z-index: 1;
         }
 
-        .login-right {
+        .register-right {
             flex: 1;
             background-color: white;
             display: flex;
@@ -101,92 +95,49 @@
             box-shadow: -5px 0 30px rgba(0, 0, 0, 0.05);
         }
 
-        .login-logo {
+        .register-logo {
             display: flex;
             align-items: center;
             margin-bottom: 30px;
         }
 
-        .login-logo img {
+        .register-logo img {
             height: 50px;
             margin-right: 10px;
         }
 
-        .login-logo span {
+        .register-logo span {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 1.8rem;
             color: var(--secondary);
         }
 
-        .login-logo span em {
+        .register-logo span em {
             color: var(--primary);
             font-style: normal;
         }
 
-        .login-headline {
+        .register-headline {
             margin-bottom: 30px;
         }
 
-        .login-headline h1 {
+        .register-headline h1 {
             font-size: 2.5rem;
             margin-bottom: 15px;
         }
 
-        .login-headline h1 span {
+        .register-headline h1 span {
             color: var(--primary);
         }
 
-        .login-headline p {
+        .register-headline p {
             font-size: 1.1rem;
             color: var(--gray);
             margin-bottom: 0;
         }
 
-        .login-benefits {
-            margin-top: 40px;
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .benefit-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 107, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        .benefit-text h5 {
-            margin-bottom: 5px;
-            font-size: 1.1rem;
-        }
-
-        .benefit-text p {
-            margin-bottom: 0;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .login-illustration {
-            position: absolute;
-            bottom: -10%;
-            right: -10%;
-            width: 500px;
-            opacity: 0.5;
-            z-index: 0;
-        }
-
-        .login-form {
+        .register-form {
             max-width: 400px;
             margin: 0 auto;
             width: 100%;
@@ -208,7 +159,7 @@
         }
 
         .form-floating {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .form-floating label {
@@ -217,11 +168,12 @@
 
         .form-control {
             border-radius: 10px;
-            padding: 15px 20px;
-            height: 60px;
+            padding: 10px 15px;
+            height: 40px;
             border: 1px solid #e1e5ea;
             background-color: #f9fafb;
             transition: all 0.3s ease;
+            font-size: 0.8rem;
         }
 
         .form-control:focus {
@@ -232,7 +184,7 @@
 
         .form-check-label {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .form-check-input:checked {
@@ -240,7 +192,7 @@
             border-color: var(--primary);
         }
 
-        .login-options {
+        .register-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -332,7 +284,6 @@
             color: var(--primary-dark);
             text-decoration: underline;
         }
-
         /* Alert Styles */
         .alert {
             position: relative;
@@ -378,57 +329,56 @@
         .alert-danger .alert-content {
             color: #ff4b03;
 
-        .alert-danger i {
-            color: #ff4b03;
-            opacity: 1;
-        }
+            .alert-danger i {
+                color: #ff4b03;
+                opacity: 1;
+            }
 
-        .alert-danger::before {
-            background-color: rgba(255, 75, 3, 0);
-            opacity: 1;
-        }
+            .alert-danger::before {
+                background-color: rgba(255, 75, 3, 0);
+                opacity: 1;
+            }
 
-        /* Active Success State */
-        .alert-success {
-            display: block;
-        }
+            /* Active Success State */
+            .alert-success {
+                display: block;
+            }
 
-        .alert-success .alert-content {
-            color: #40ff00;
-        }
+            .alert-success .alert-content {
+                color: #40ff00;
+            }
 
-        .alert-success i {
-            color: #006e15; /* Blue icon for success */
-            opacity: 1;
-        }
+            .alert-success i {
+                color: #006e15; /* Blue icon for success */
+                opacity: 1;
+            }
 
-        .alert-success::before {
-            background-color: rgba(72, 253, 107, 0.79);
-            opacity: 1;
-        }
-
+            .alert-success::before {
+                background-color: rgba(72, 253, 107, 0.79);
+                opacity: 1;
+            }
         @media (max-width: 991px) {
-            .login-container {
+            .register-container {
                 flex-direction: column;
                 height: auto;
             }
 
-            .login-left, .login-right {
+            .register-left, .register-right {
                 width: 100%;
                 padding: 30px 20px;
             }
 
-            .login-left {
+            .register-left {
                 min-height: 300px;
             }
 
-            .login-illustration {
+            .register-illustration {
                 width: 300px;
                 right: -5%;
                 bottom: -15%;
             }
 
-            .login-form {
+            .register-form {
                 max-width: 100%;
             }
         }
@@ -436,14 +386,14 @@
     </style>
 </head>
 <body>
-<div class="login-container">
+<div class="register-container">
     <!-- Left side - Welcome and benefits -->
-    <div class="login-left" data-aos="fade-right" data-aos-duration="1000">
-        <div class="login-logo">
-            <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+    <div class="register-left" data-aos="fade-right" data-aos-duration="1000">
+        <div class="register-logo">
+            <img src="../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
             <span>Mega<em>Cab</em></span>
         </div>
-        <div class="login-headline">
+        <div class="register-headline">
             <h1>Welcome to <span>MegaCab</span></h1>
             <p>Your premium ride service in Colombo</p>
         </div>
@@ -476,70 +426,64 @@
                 </div>
             </div>
         </div>
-        <img src="Assets/images/sedan.png" alt="Cab Service Illustration" class="login-illustration">
+        <img src="/api/placeholder/500/300" alt="Cab Service Illustration" class="login-illustration">
     </div>
 
-    <!-- Right side - Login form -->
-    <div class="login-right" data-aos="fade-left" data-aos-duration="1000">
-        <form action="login" method="post" class="login-form">
+    <!-- Right side - Register form -->
+    <div class="register-right" data-aos="fade-left" data-aos-duration="1000">
+        <form action="register" method="post" class="register-form">
             <div class="form-title">
-                <h2>Login</h2>
-                <p>Access your account to book rides and manage your trips</p>
+                <h2>Customer Registration</h2>
+                <p>Sign up to book rides and enjoy MegaCab services</p>
             </div>
 
 
+            <div class="form-floating">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                <label for="name"><i class="fas fa-user me-2"></i>Full Name</label>
+            </div>
             <div class="form-floating">
                 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
                 <label for="email"><i class="fas fa-envelope me-2"></i>Email address</label>
             </div>
             <div class="form-floating">
+                <input type="text" class="form-control" id="address" name="address" placeholder="Your Address" required>
+                <label for="address"><i class="fas fa-map-marker-alt me-2"></i>Address</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Number" required>
+                <label for="contact"><i class="fas fa-phone me-2"></i>Contact Number</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="nic" name="nic" placeholder="NIC Number" required>
+                <label for="nic"><i class="fas fa-id-card me-2"></i>NIC Number</label>
+            </div>
+
+            <div class="form-floating">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 <label for="password"><i class="fas fa-lock me-2"></i>Password</label>
             </div>
-            <div class="login-options">
-<%--                <div class="form-check">--%>
-<%--                    <input class="form-check-input" type="checkbox" value="" id="rememberMe">--%>
-<%--                    <label class="form-check-label" for="rememberMe">--%>
-<%--                        Remember me--%>
-<%--                    </label>--%>
-<%--                </div>--%>
-
-                <!-- Error Message -->
-                <c:if test="${not empty param.error}">
-                    <div class="alert alert-danger show">
-                        <div class="alert-content">
-                            <i class="fas fa-exclamation-circle"></i>${param.error}
-                        </div>
-                    </div>
-                </c:if>
-                <a href="#" class="forgot-password">Forgot password?</a>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                <label for="confirmPassword"><i class="fas fa-lock me-2"></i>Confirm Password</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-            </button>
-
-
-
-            <!-- Success Message -->
-            <c:if test="${not empty param.message}">
-                <div class="alert alert-success show">
-                    <div class="alert-content">
-                        <i class="fas fa-check-circle"></i>${param.message}
-                    </div>
+            <!-- Error Message -->
+            <c:if test="${not empty param.error}">
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>${param.error}
                 </div>
             </c:if>
 
-            <div class="social-login">
-                <p>Or login with</p>
-                <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-apple"></i></a>
+            <!-- Success Message -->
+            <c:if test="${not empty param.message}">
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>${param.message}
                 </div>
-            </div>
+            </c:if>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
 
             <div class="register-link">
-                Don't have an account? <a href="register.jsp">Register now</a>
+                Already have an account? <a href="login.jsp">Login here</a>
             </div>
         </form>
     </div>
