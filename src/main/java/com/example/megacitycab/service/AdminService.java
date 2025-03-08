@@ -1,4 +1,4 @@
-package com.example.megacitycab.services;
+package com.example.megacitycab.service;
 
 import com.example.megacitycab.util.AdminCredentialsManager;
 

@@ -1,4 +1,4 @@
-package com.example.megacitycab.services;
+package com.example.megacitycab.service;
 
 import com.example.megacitycab.dao.CustomerDAO;
 import com.example.megacitycab.model.Customer;

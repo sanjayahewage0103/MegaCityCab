@@ -1,6 +1,6 @@
 package com.example.megacitycab.controller;
 
-import com.example.megacitycab.services.CustomerService;
+import com.example.megacitycab.service.CustomerService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
