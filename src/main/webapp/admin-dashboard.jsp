@@ -320,7 +320,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="sidebar-logo">
-        <img src="../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+        <img src="../../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
         <span>Mega<em>Cab</em></span>
     </div>
     <h6 class="text-center mb-4" style="color: var(--primary);">Admin Dashboard</h6>
@@ -387,7 +387,7 @@
             </h2>
             <div id="customerMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="view-customers.jsp"><i class="fas fa-list"></i>Manage Customer</a>
+                    <a href=""><i class="fas fa-list"></i>Manage Customer</a>
                 </div>
             </div>
         </div>
