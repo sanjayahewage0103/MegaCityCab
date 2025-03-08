@@ -61,4 +61,13 @@
         <url-pattern>/manage-driver</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DriverDashboardServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.DriverDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DriverDashboardServlet</servlet-name>
+        <url-pattern>/driver-dashboard</url-pattern>
+    </servlet-mapping>
+
 </web-app>

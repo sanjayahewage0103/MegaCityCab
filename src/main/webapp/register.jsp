@@ -390,7 +390,7 @@
     <!-- Left side - Welcome and benefits -->
     <div class="register-left" data-aos="fade-right" data-aos-duration="1000">
         <div class="register-logo">
-            <img src="../../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+            <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo">
             <span>Mega<em>Cab</em></span>
         </div>
         <div class="register-headline">

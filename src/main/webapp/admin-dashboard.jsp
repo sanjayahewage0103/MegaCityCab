@@ -320,7 +320,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="sidebar-logo">
-        <img src="../../../Assets/images/megacab-logo.svg" alt="MegaCab Logo">
+        <img src="Assets/images/megacab-logo.svg" alt="MegaCab Logo">
         <span>Mega<em>Cab</em></span>
     </div>
     <h6 class="text-center mb-4" style="color: var(--primary);">Admin Dashboard</h6>
@@ -495,7 +495,11 @@
             <button class="btn w-100"><i class="fas fa-user-plus"></i>Add User</button>
         </div>
         <div class="col-md-4">
-            <button class="btn w-100 mb-3"><i class="fas fa-id-badge"></i>Add Driver</button>
+            <a href="driver-dashboard" class="text-decoration-none" style="color: inherit;">
+                <button class="btn w-100 mb-3">
+                    <i class="fas fa-id-badge"></i> Driver
+                </button>
+            </a>
             <button class="btn w-100"><i class="fas fa-taxi"></i>Book Ride</button>
         </div>
         <div class="col-md-4">
