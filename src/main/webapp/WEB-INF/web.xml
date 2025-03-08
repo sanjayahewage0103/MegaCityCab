@@ -43,4 +43,22 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddDriverServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.AddDriverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDriverServlet</servlet-name>
+        <url-pattern>/add-driver</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ManageDriverServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.ManageDriverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageDriverServlet</servlet-name>
+        <url-pattern>/manage-driver</url-pattern>
+    </servlet-mapping>
+
 </web-app>
