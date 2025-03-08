@@ -32,4 +32,19 @@ public class DriverService {
         driverDAO.deleteDriver(driverId);
     }
 
+    public int getTotalDriverCount() throws SQLException {
+        return driverDAO.getTotalDriverCount();
+    }
+
+    public int getActiveDriverCount() throws SQLException {
+        return driverDAO.getActiveDriverCount();
+    }
+
+    public int getInactiveDriverCount() throws SQLException {
+        return driverDAO.getInactiveDriverCount();
+    }
+
+    public List<Driver> searchDrivers(String query) throws SQLException {
+        return driverDAO.searchDrivers(query);
+    }
 }
