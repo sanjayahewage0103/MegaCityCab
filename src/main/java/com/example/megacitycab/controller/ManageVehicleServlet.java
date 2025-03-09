@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class VehicleDashboardServlet extends HttpServlet {
+public class ManageVehicleServlet extends HttpServlet {
 
     private final VehicleService vehicleService;
 
-    public VehicleDashboardServlet() {
+    public ManageVehicleServlet() {
         this.vehicleService = new VehicleService();
     }
 
