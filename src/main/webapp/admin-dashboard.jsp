@@ -353,8 +353,8 @@
             </h2>
             <div id="vehicleMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="manage-vehicles.jsp"><i class="fas fa-plus"></i>Add New Car</a>
-                    <a href="manage-vehicles.jsp"><i class="fas fa-list"></i>Manage Cars</a>
+                    <a href="add-vehicle.jsp"><i class="fas fa-plus"></i>Add New Car</a>
+                    <a href="manage-vehicle"><i class="fas fa-list"></i>Manage Cars</a>
                 </div>
             </div>
         </div>
