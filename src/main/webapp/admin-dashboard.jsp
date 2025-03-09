@@ -82,7 +82,7 @@
 
         /* Sidebar Styles */
         .sidebar {
-            width: 260px;
+            width: 300px;
             height: 100vh;
             position: fixed;
             top: 0;
@@ -192,7 +192,7 @@
 
         /* Main Content Styles */
         .main-content {
-            margin-left: 260px;
+            margin-left: 300px;
             padding: 30px;
             transition: all 0.3s ease;
         }
@@ -248,10 +248,10 @@
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 12px 15px;
+            padding: 30px 15px;
             margin-bottom: 15px;
-            font-weight: 500;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 1rem;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -354,7 +354,7 @@
             <div id="vehicleMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <a href="add-vehicle.jsp"><i class="fas fa-plus"></i>Add New Car</a>
-                    <a href="manage-vehicle"><i class="fas fa-list"></i>Manage Cars</a>
+                    <a href="view-edit-vehicle"><i class="fas fa-list"></i>Manage Cars</a>
                 </div>
             </div>
         </div>
@@ -491,7 +491,11 @@
     <!-- Quick Access Buttons -->
     <div class="row quick-access-buttons">
         <div class="col-md-4">
-            <button class="btn w-100 mb-3"><i class="fas fa-car"></i>Add Vehicle</button>
+            <a href="manage-vehicle" class="text-decoration-none" style="color: inherit;">
+                <button class="btn w-100 mb-3">
+                    <i class="fas fa-id-badge"></i> Vehicle
+                </button>
+            </a>
             <button class="btn w-100"><i class="fas fa-user-plus"></i>Add User</button>
         </div>
         <div class="col-md-4">
