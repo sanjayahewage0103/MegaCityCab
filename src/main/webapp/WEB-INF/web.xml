@@ -79,4 +79,13 @@
         <url-pattern>/manage-vehicle</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ViewEditVehicleServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.ViewEditVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewEditVehicleServlet</servlet-name>
+        <url-pattern>/view-edit-vehicle</url-pattern>
+    </servlet-mapping>
+
 </web-app>
