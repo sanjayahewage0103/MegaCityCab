@@ -25,17 +25,55 @@ public class ManageVehicleServlet extends HttpServlet {
         String action = request.getParameter("action");
         try {
             if ("delete".equals(action)) {
+                // Handle Delete Action
                 int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
-                vehicleService.deleteVehicle(vehicleId);
-                request.setAttribute("message", "Vehicle deleted successfully!");
+                boolean isDeleted = vehicleService.deleteVehicle(vehicleId);
+                if (isDeleted) {
+                    request.setAttribute("message", "Vehicle deleted successfully!");
+                } else {
+                    request.setAttribute("error", "Failed to delete the vehicle.");
+                }
             }
 
+            // Fetch all vehicles
+            List<Vehicle> vehicles = vehicleService.getAllVehicles();
+
+            // Calculate counts for each status
+            int totalVehicles = vehicles.size();
+            int availableVehicles = 0;
+            int ongoingVehicles = 0;
+            int maintenanceVehicles = 0;
+
+            for (Vehicle vehicle : vehicles) {
+                switch (vehicle.getStatus()) {
+                    case "Available":
+                        availableVehicles++;
+                        break;
+                    case "Ongoing":
+                        ongoingVehicles++;
+                        break;
+                    case "Service":
+                        maintenanceVehicles++;
+                        break;
+                }
+            }
+
+            // Set counts as request attributes
+            request.setAttribute("totalVehicles", totalVehicles);
+            request.setAttribute("availableVehicles", availableVehicles);
+            request.setAttribute("ongoingVehicles", ongoingVehicles);
+            request.setAttribute("maintenanceVehicles", maintenanceVehicles);
+
+            // Handle Search Query
             String searchQuery = request.getParameter("search");
-            List<Vehicle> vehicles = (searchQuery != null && !searchQuery.isEmpty())
-                    ? vehicleService.searchVehicles(searchQuery)
-                    : vehicleService.getAllVehicles();
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                vehicles = vehicleService.searchVehicles(searchQuery);
+            }
+
+            // Set vehicles as request attribute
             request.setAttribute("vehicles", vehicles);
 
+            // Forward to JSP
             request.getRequestDispatcher("/manage-vehicles.jsp").forward(request, response);
         } catch (SQLException e) {
             request.setAttribute("error", "Database error: " + e.getMessage());
@@ -57,14 +95,25 @@ public class ManageVehicleServlet extends HttpServlet {
             vehicle.setStatus(request.getParameter("status"));
 
             if ("add".equals(action)) {
-                vehicleService.addVehicle(vehicle);
-                request.setAttribute("message", "Vehicle added successfully!");
+                // Add New Vehicle
+                boolean isAdded = vehicleService.addVehicle(vehicle);
+                if (isAdded) {
+                    request.setAttribute("message", "Vehicle added successfully!");
+                } else {
+                    request.setAttribute("error", "Failed to add the vehicle.");
+                }
             } else if ("update".equals(action)) {
+                // Update Existing Vehicle
                 vehicle.setVehicleId(Integer.parseInt(request.getParameter("vehicleId")));
-                vehicleService.updateVehicle(vehicle);
-                request.setAttribute("message", "Vehicle updated successfully!");
+                boolean isUpdated = vehicleService.updateVehicle(vehicle);
+                if (isUpdated) {
+                    request.setAttribute("message", "Vehicle updated successfully!");
+                } else {
+                    request.setAttribute("error", "Failed to update the vehicle.");
+                }
             }
 
+            // Redirect to the same page to refresh data
             response.sendRedirect("manage-vehicle?action=view");
         } catch (SQLException e) {
             request.setAttribute("error", "Database error: " + e.getMessage());
