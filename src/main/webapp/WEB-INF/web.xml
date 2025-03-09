@@ -70,4 +70,13 @@
         <url-pattern>/driver-dashboard</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ManageVehicleServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.ManageVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageVehicleServlet</servlet-name>
+        <url-pattern>/manage-vehicle</url-pattern>
+    </servlet-mapping>
+
 </web-app>

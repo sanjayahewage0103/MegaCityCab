@@ -35,7 +35,7 @@ public class DatabaseConnection {
         return instance;
     }
 
-    // Getter for the database connection
+    // Getter for the database connection (non-static)
     public Connection getConnection() {
         return connection;
     }
