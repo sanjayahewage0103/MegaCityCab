@@ -1,25 +1,29 @@
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.example.megacitycab.model.PromoCode" %>
 <%@ page import="java.util.List" %>
+<%
+  if (session == null || session.getAttribute("admin") == null) {
+    response.sendRedirect("admin-login.jsp?error=You must log in to access the admin dashboard.");
+    return;
+  }
+  String adminUsername = (String) session.getAttribute("admin");
+%>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Manage Promo Codes</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <!-- AOS Animation Library -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
   <style>
     :root {
-      /* Custom Color Palette */
       --primary: #FF4500;  /* Intense Orange-Red */
       --primary-dark: #C43E00;  /* Darker shade */
       --secondary: #2C3E50;
@@ -211,26 +215,49 @@
       background-color: var(--primary);
       border-radius: 2px;
     }
-
-    /* Form Styling */
-    .input-group {
-      margin-bottom: 0.8rem;
-      position: relative;
+    .form-field {
+      margin-bottom: 1.2rem;
     }
 
-    .input-group-icon {
-      position: relative;
+    .form-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+
+    .date-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .date-field {
+      flex: 1;
     }
 
     .input-group-icon input,
     .input-group-icon select {
-      width: 100%;
-      padding: 0.6rem 0.8rem 0.6rem 2.5rem;
+      padding: 0.75rem 0.8rem 0.75rem 2.5rem;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       font-size: 0.9rem;
-      transition: all 0.35s ease-in-out;
+      transition: all 0.25s ease-in-out;
       background-color: var(--light-bg);
+      width: 100%;
+    }
+
+    .input-group-icon input:focus,
+    .input-group-icon select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+    }
+
+    .input-group-icon input:hover,
+    .input-group-icon select:hover {
+      border-color: var(--primary-dark);
     }
 
     .input-group-icon .input-icon {
@@ -243,13 +270,7 @@
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-    }
-
-    .input-group-icon input:focus,
-    .input-group-icon select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+      transition: color 0.2s ease;
     }
 
     .input-group-icon input:focus + .input-icon,
@@ -258,10 +279,11 @@
     }
 
     .submit-btn {
+      margin-top: 0.8rem;
       background-color: var(--primary);
       color: white;
       border: none;
-      padding: 0.7rem 1rem;
+      padding: 0.8rem 1rem;
       border-radius: 8px;
       font-weight: 500;
       cursor: pointer;
@@ -278,6 +300,14 @@
       background-color: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(255, 69, 0, 0.4);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+      .date-row {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
     }
 
     /* Right Column */
@@ -347,10 +377,10 @@
     }
 
     .table-responsive {
-      overflow-x: auto;
-      max-height: 550px;
-      overflow-y: auto;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
+      overflow-y: auto;
+      scrollbar-width: thin;
     }
 
     table {
@@ -650,49 +680,65 @@
 
   <!-- Main Content with 30-70 Split -->
   <div class="main-content">
-    <!-- Left Column (30%) - Add Promo Form -->
     <div class="left-column">
       <div class="form-container">
         <h2 class="section-title">Add New Promo Code</h2>
         <form method="post" action="promo-code-servlet">
           <input type="hidden" name="action" value="add">
 
-          <div class="input-group input-group-icon">
-            <input type="text" name="promoCode" placeholder="Promo Code" required>
-            <div class="input-icon">
-              <i class="fas fa-ticket-alt"></i>
+          <div class="form-field">
+            <label for="promoCode">Promo Code</label>
+            <div class="input-group input-group-icon">
+              <input type="text" id="promoCode" name="promoCode" placeholder="Enter promo code" required>
+              <div class="input-icon">
+                <i class="fas fa-ticket-alt"></i>
+              </div>
             </div>
           </div>
 
-          <div class="input-group input-group-icon">
-            <input type="number" step="0.01" name="discountPercentage" placeholder="Discount Percentage" required>
-            <div class="input-icon">
-              <i class="fas fa-percent"></i>
+          <div class="form-field">
+            <label for="discountPercentage">Discount Percentage</label>
+            <div class="input-group input-group-icon">
+              <input type="number" step="0.01" id="discountPercentage" name="discountPercentage" placeholder="Enter discount %" required>
+              <div class="input-icon">
+                <i class="fas fa-percent"></i>
+              </div>
             </div>
           </div>
 
-          <div class="input-group input-group-icon">
-            <input type="date" name="validFrom" required>
-            <div class="input-icon">
-              <i class="fas fa-calendar-alt"></i>
+          <div class="date-row">
+            <div class="form-field date-field">
+              <label for="validFrom">Issue Date</label>
+              <div class="input-group input-group-icon">
+                <input type="date" id="validFrom" name="validFrom" required>
+                <div class="input-icon">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field date-field">
+              <label for="validUntil">Expiry Date</label>
+              <div class="input-group input-group-icon">
+                <input type="date" id="validUntil" name="validUntil" required>
+                <div class="input-icon">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="input-group input-group-icon">
-            <input type="date" name="validUntil" required>
-            <div class="input-icon">
-              <i class="fas fa-calendar-check"></i>
-            </div>
-          </div>
-
-          <div class="input-group input-group-icon">
-            <select name="status" required>
-              <option value="" disabled selected>Select Status</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <div class="input-icon">
-              <i class="fas fa-toggle-on"></i>
+          <div class="form-field">
+            <label for="status">Status</label>
+            <div class="input-group input-group-icon">
+              <select id="status" name="status" required>
+                <option value="" disabled selected>Select Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <div class="input-icon">
+                <i class="fas fa-toggle-on"></i>
+              </div>
             </div>
           </div>
 
@@ -741,7 +787,7 @@
       <!-- Promo Codes Table -->
       <div class="table-container">
         <h2 class="section-title">All Promo Codes</h2>
-        <div class="table-responsive">
+        <div class="table-responsive" style="max-height: 400px;">
           <table>
             <thead>
             <tr>
