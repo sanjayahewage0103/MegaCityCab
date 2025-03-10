@@ -88,4 +88,32 @@
         <url-pattern>/view-edit-vehicle</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PromoCodeServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.PromoCodeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PromoCodeServlet</servlet-name>
+        <url-pattern>/promo-code-servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PricingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.PricingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PricingServlet</servlet-name>
+        <url-pattern>/pricing-servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DiscountServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.DiscountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DiscountServlet</servlet-name>
+        <url-pattern>/discount-servlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
