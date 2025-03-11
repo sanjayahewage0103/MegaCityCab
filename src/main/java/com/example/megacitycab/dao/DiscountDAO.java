@@ -94,11 +94,11 @@ public class DiscountDAO {
 
     public Discount getActiveDiscountForRange(String vehicleType, double totalDistance) throws SQLException {
         String query = "SELECT * FROM discount WHERE vehicle_type = ? AND km_range_start <= ? AND km_range_end >= ? AND status = 'Active'";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, vehicleType);
             stmt.setDouble(2, totalDistance);
             stmt.setDouble(3, totalDistance);
-
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Discount discount = new Discount();
@@ -108,11 +108,9 @@ public class DiscountDAO {
                 discount.setKmRangeEnd(rs.getInt("km_range_end"));
                 discount.setDiscountPercentage(rs.getDouble("discount_percentage"));
                 discount.setStatus(rs.getString("status"));
-                discount.setCreatedAt(rs.getTimestamp("created_at"));
-                discount.setUpdatedAt(rs.getTimestamp("updated_at"));
                 return discount;
             }
         }
-        return null; // Return null if no active discount is found
+        return null;
     }
 }

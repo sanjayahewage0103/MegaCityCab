@@ -2,8 +2,10 @@ package com.example.megacitycab.dao;
 
 import com.example.megacitycab.model.PromoCode;
 import com.example.megacitycab.util.DatabaseConnection;
+import com.example.megacitycab.util.DateUtils;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,21 +119,31 @@ public class PromoCodeDAO {
     }
 
     public PromoCode getValidPromoCode(String promoCode) throws SQLException {
-        String query = "SELECT * FROM promo_codes WHERE promo_code = ? AND status = 'Active' AND valid_from <= CURDATE() AND valid_until >= CURDATE()";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        String query = "SELECT * FROM promo_codes WHERE promo_code = ? AND valid_from <= ? AND valid_until >= ? AND status = 'Active'";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, promoCode);
+
+            // Convert LocalDate to java.sql.Date
+            LocalDate today = LocalDate.now();
+            stmt.setDate(2, DateUtils.toSqlDate(today)); // valid_from
+            stmt.setDate(3, DateUtils.toSqlDate(today)); // valid_until
+
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                PromoCode validPromoCode = new PromoCode();
-                validPromoCode.setId(rs.getInt("id"));
-                validPromoCode.setPromoCode(rs.getString("promo_code"));
-                validPromoCode.setDiscountPercentage(rs.getDouble("discount_percentage"));
-                validPromoCode.setValidFrom(rs.getDate("valid_from"));
-                validPromoCode.setValidUntil(rs.getDate("valid_until"));
-                validPromoCode.setStatus(rs.getString("status"));
-                return validPromoCode;
+                PromoCode promo = new PromoCode();
+                promo.setId(rs.getInt("id"));
+                promo.setPromoCode(rs.getString("promo_code"));
+                promo.setDiscountPercentage(rs.getDouble("discount_percentage"));
+
+                // Convert java.sql.Date back to LocalDate
+                promo.setValidFrom(rs.getDate("valid_from"));
+                promo.setValidUntil(rs.getDate("valid_until"));
+
+                promo.setStatus(rs.getString("status"));
+                return promo;
             }
         }
-        return null; // Return null if no valid promo code is found
+        return null;
     }
 }

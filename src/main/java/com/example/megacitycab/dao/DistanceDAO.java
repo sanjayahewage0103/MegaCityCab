@@ -45,7 +45,8 @@ public class DistanceDAO {
     // Get distance between two locations
     public double getDistance(String locationFrom, String locationTo) throws SQLException {
         String query = "SELECT distance_km FROM distances WHERE location_from = ? AND location_to = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, locationFrom);
             stmt.setString(2, locationTo);
             ResultSet rs = stmt.executeQuery();
@@ -53,7 +54,7 @@ public class DistanceDAO {
                 return rs.getDouble("distance_km");
             }
         }
-        return 0; // Return 0 if no distance is found
+        return 0;
     }
 
     // Update distance
