@@ -11,14 +11,11 @@ public class AuthenticationService {
     }
 
     public boolean authenticateCustomer(String email, String password) {
-        // Retrieve the hashed password from the database
         String storedHashedPassword = customerDAO.getHashedPasswordByEmail(email);
 
         if (storedHashedPassword == null) {
-            return false; // Email not found
+            return false;
         }
-
-        // Hash the input password and compare with the stored hash
         String hashedInputPassword = PasswordHasher.hashPassword(password);
         return storedHashedPassword.equals(hashedInputPassword);
     }
