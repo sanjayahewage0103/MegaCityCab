@@ -47,4 +47,27 @@ public class PricingDAO {
             stmt.executeUpdate();
         }
     }
+
+    // Fetch pricing rule by vehicle type
+    public Pricing getPricingByVehicleType(String vehicleType) throws SQLException {
+        String query = "SELECT * FROM pricing WHERE vehicle_type = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, vehicleType);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Pricing pricing = new Pricing();
+                pricing.setPricingId(rs.getInt("pricing_id"));
+                pricing.setVehicleType(rs.getString("vehicle_type"));
+                pricing.setTaxPercentage(rs.getDouble("tax_percentage"));
+                pricing.setPricePerKmBelow10(rs.getDouble("price_per_km_below_10"));
+                pricing.setPricePerKm10To20(rs.getDouble("price_per_km_10_to_20"));
+                pricing.setPricePerKm20To50(rs.getDouble("price_per_km_20_to_50"));
+                pricing.setPricePerKmAbove50(rs.getDouble("price_per_km_above_50"));
+                pricing.setCreatedAt(rs.getTimestamp("created_at"));
+                pricing.setUpdatedAt(rs.getTimestamp("updated_at"));
+                return pricing;
+            }
+        }
+        return null; // Return null if no pricing rule is found for the given vehicle type
+    }
 }
