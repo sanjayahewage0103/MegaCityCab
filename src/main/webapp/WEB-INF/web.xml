@@ -116,4 +116,13 @@
         <url-pattern>/discount-servlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.BookingServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/booking-servlet</url-pattern>
+    </servlet-mapping>
 </web-app>

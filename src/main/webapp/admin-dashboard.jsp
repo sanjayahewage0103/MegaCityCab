@@ -370,8 +370,8 @@
             </h2>
             <div id="driverMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="manage-driver"><i class="fas fa-list"></i>Manage Driver</a>
                     <a href="add-driver.jsp"><i class="fas fa-user-plus"></i>Add New Driver</a>
+                    <a href="manage-driver"><i class="fas fa-list"></i>Manage Driver</a>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
             </h2>
             <div id="customerMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href=""><i class="fas fa-list"></i>Manage Customer</a>
+                    <a href="taxi-management"><i class="fas fa-list"></i>Manage Customer</a>
                 </div>
             </div>
         </div>
@@ -403,8 +403,9 @@
             </h2>
             <div id="promoMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-ticket-alt"></i>Manage Coupon</a>
-                    <a href="#"><i class="fas fa-percent"></i>Manage Promo Codes</a>
+                    <a href="promo-code-servlet"><i class="fas fa-percent"></i>Manage Promo Codes</a>
+                    <a href="pricing-servlet"><i class="fas fa-ticket-alt"></i>Manage Tax & pay</a>
+                    <a href="discount-servlet"><i class="fas fa-ticket-alt"></i>Manage Discounts</a>
                 </div>
             </div>
         </div>
