@@ -125,4 +125,29 @@
         <servlet-name>BookingServlet</servlet-name>
         <url-pattern>/booking-servlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConfirmBookingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.ConfirmBookingServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ConfirmBookingServlet</servlet-name>
+        <url-pattern>/confirm-booking</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>com.example.megacitycab.listener.AppContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>CustomerDashboardServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.CustomerDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CustomerDashboardServlet</servlet-name>
+        <url-pattern>/customer-dashboard</url-pattern>
+    </servlet-mapping>
+
 </web-app>
