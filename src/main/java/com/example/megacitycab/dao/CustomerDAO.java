@@ -32,8 +32,6 @@ public class CustomerDAO {
             return false;
         }
     }
-
-    // Method to check if NIC already exists
     public boolean isNicExists(String nic) {
         String query = "SELECT COUNT(*) FROM customer WHERE nic = ?";
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
@@ -68,7 +66,25 @@ public class CustomerDAO {
         } catch (SQLException e) {
             System.err.println("Error retrieving hashed password: " + e.getMessage());
         }
-        return null; // Email not found
+        return null;
+    }
+
+    public int getCustomerIdByEmail(String email) {
+        String query = "SELECT customer_id FROM customer WHERE email = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("customer_id");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving customerId: " + e.getMessage());
+        }
+        return -1;
     }
 
 }
