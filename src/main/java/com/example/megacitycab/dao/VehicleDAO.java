@@ -99,4 +99,28 @@ public class VehicleDAO {
         }
         return vehicles;
     }
+
+    // Get vehicle by type
+    public Vehicle getVehicleByType(String vehicleType) throws SQLException {
+        String query = "SELECT * FROM vehicle WHERE type = ? LIMIT 1"; // Assuming one vehicle per type for simplicity
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, vehicleType);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Vehicle vehicle = new Vehicle();
+                vehicle.setVehicleId(resultSet.getInt("vehicle_id"));
+                vehicle.setVehicleNumber(resultSet.getString("vehicle_number"));
+                vehicle.setColor(resultSet.getString("color"));
+                vehicle.setRegisterNumber(resultSet.getString("register_number"));
+                vehicle.setModel(resultSet.getString("model"));
+                vehicle.setType(resultSet.getString("type"));
+                vehicle.setSeatingCapacity(resultSet.getInt("seating_capacity"));
+                vehicle.setStatus(resultSet.getString("status"));
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
 }
