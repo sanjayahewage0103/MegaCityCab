@@ -4,8 +4,6 @@
     response.sendRedirect("admin-login.jsp?error=You must log in to access the admin dashboard.");
     return;
   }
-
-  // Retrieve the admin username from the session
   String adminUsername = (String) session.getAttribute("admin");
 %>
 <!DOCTYPE html>
