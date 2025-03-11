@@ -115,4 +115,23 @@ public class PromoCodeDAO {
         }
         return 0;
     }
+
+    public PromoCode getValidPromoCode(String promoCode) throws SQLException {
+        String query = "SELECT * FROM promo_codes WHERE promo_code = ? AND status = 'Active' AND valid_from <= CURDATE() AND valid_until >= CURDATE()";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, promoCode);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                PromoCode validPromoCode = new PromoCode();
+                validPromoCode.setId(rs.getInt("id"));
+                validPromoCode.setPromoCode(rs.getString("promo_code"));
+                validPromoCode.setDiscountPercentage(rs.getDouble("discount_percentage"));
+                validPromoCode.setValidFrom(rs.getDate("valid_from"));
+                validPromoCode.setValidUntil(rs.getDate("valid_until"));
+                validPromoCode.setStatus(rs.getString("status"));
+                return validPromoCode;
+            }
+        }
+        return null; // Return null if no valid promo code is found
+    }
 }
