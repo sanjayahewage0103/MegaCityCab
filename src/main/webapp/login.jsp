@@ -476,7 +476,7 @@
                 </div>
             </div>
         </div>
-        <img src="../../../Assets/images/sedan.png" alt="Cab Service Illustration" class="login-illustration">
+        <img src="Assets/images/sedan.png" alt="Cab Service Illustration" class="login-illustration">
     </div>
 
     <!-- Right side - Login form -->
