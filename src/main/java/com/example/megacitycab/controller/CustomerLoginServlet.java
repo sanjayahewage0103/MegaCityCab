@@ -1,6 +1,8 @@
 package com.example.megacitycab.controller;
 
 import com.example.megacitycab.service.AuthenticationService;
+import com.example.megacitycab.dao.CustomerDAO;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,9 +13,11 @@ import java.io.IOException;
 
 public class CustomerLoginServlet extends HttpServlet {
     private AuthenticationService authenticationService;
+    private CustomerDAO customerDAO;
 
     public CustomerLoginServlet() {
         this.authenticationService = new AuthenticationService();
+        this.customerDAO = new CustomerDAO(); // Initialize the CustomerDAO
     }
 
     @Override
@@ -21,13 +25,16 @@ public class CustomerLoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Authenticate the user
         boolean isAuthenticated = authenticationService.authenticateCustomer(email, password);
 
         if (isAuthenticated) {
             HttpSession session = request.getSession();
             session.setAttribute("email", email); // Store email in session
-            response.sendRedirect("dashboard.jsp?message=Login successful!");
+
+            int customerId = customerDAO.getCustomerIdByEmail(email);
+            session.setAttribute("customerId", customerId);
+
+            response.sendRedirect("customer-dashboard.jsp?message=Login successful!");
         } else {
             response.sendRedirect("login.jsp?error=Invalid email or password.");
         }
