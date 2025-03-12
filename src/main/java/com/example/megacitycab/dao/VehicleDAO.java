@@ -123,20 +123,32 @@ public class VehicleDAO {
         return null;
     }
 
-    public List<Vehicle> getAvailableVehiclesByType(String vehicleType) throws SQLException {
-        String query = "SELECT * FROM vehicles WHERE type = ? AND status = 'Available'";
+    // Fetch all available vehicles (status = 'Available')
+    public List<Vehicle> getAvailableVehicles(String type) throws SQLException {
+        String query = "SELECT * FROM vehicle WHERE status = 'Available'";
+        if (type != null && !type.isEmpty()) {
+            query += " AND type = ?";
+        }
+
         List<Vehicle> vehicles = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            stmt.setString(1, vehicleType);
-            ResultSet rs = stmt.executeQuery();
+            if (type != null && !type.isEmpty()) {
+                stmt.setString(1, type);
+            }
 
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Vehicle vehicle = new Vehicle();
                 vehicle.setVehicleId(rs.getInt("vehicle_id"));
                 vehicle.setVehicleNumber(rs.getString("vehicle_number"));
+                vehicle.setColor(rs.getString("color"));
+                vehicle.setRegisterNumber(rs.getString("register_number"));
+                vehicle.setModel(rs.getString("model"));
                 vehicle.setType(rs.getString("type"));
+                vehicle.setSeatingCapacity(rs.getInt("seating_capacity"));
+                vehicle.setStatus(rs.getString("status"));
                 vehicles.add(vehicle);
             }
         }

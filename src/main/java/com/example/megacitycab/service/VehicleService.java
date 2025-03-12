@@ -7,11 +7,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class VehicleService {
-
     private final VehicleDAO vehicleDAO;
 
+    // Existing no-argument constructor
     public VehicleService() {
         this.vehicleDAO = new VehicleDAO();
+    }
+
+    // New constructor to accept a VehicleDAO object
+    public VehicleService(VehicleDAO vehicleDAO) {
+        this.vehicleDAO = vehicleDAO;
     }
 
     public boolean addVehicle(Vehicle vehicle) throws SQLException {
@@ -32,5 +37,10 @@ public class VehicleService {
 
     public List<Vehicle> searchVehicles(String queryParam) throws SQLException {
         return vehicleDAO.searchVehicles(queryParam);
+    }
+
+    // Method to fetch all available vehicles with optional filtering by type
+    public List<Vehicle> getAvailableVehicles(String type) throws SQLException {
+        return vehicleDAO.getAvailableVehicles(type);
     }
 }

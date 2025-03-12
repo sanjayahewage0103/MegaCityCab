@@ -10,16 +10,6 @@ public class VehicleAssignment {
     private Timestamp assignedAt;
     private String status;
 
-    // Constructors
-    public VehicleAssignment() {}
-
-    public VehicleAssignment(int bookingId, int vehicleId, int driverId, String status) {
-        this.bookingId = bookingId;
-        this.vehicleId = vehicleId;
-        this.driverId = driverId;
-        this.status = status;
-    }
-
     // Getters and Setters
     public int getAssignmentId() {
         return assignmentId;
@@ -67,17 +57,5 @@ public class VehicleAssignment {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "VehicleAssignment{" +
-                "assignmentId=" + assignmentId +
-                ", bookingId=" + bookingId +
-                ", vehicleId=" + vehicleId +
-                ", driverId=" + driverId +
-                ", assignedAt=" + assignedAt +
-                ", status='" + status + '\'' +
-                '}';
     }
 }
