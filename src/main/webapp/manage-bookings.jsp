@@ -1,13 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: pethu
-  Date: 3/5/2025
-  Time: 11:29 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.megacitycab.model.Booking" %>
+<%@ page import="com.example.megacitycab.model.Driver" %>
+<%@ page import="com.example.megacitycab.model.Vehicle" %>
 
 <%
   // Redirect if admin is not logged in
@@ -192,7 +188,100 @@
     </div>
   </div>
 </div>
-
+<!-- Available Drivers Table -->
+<div class="row mt-5">
+  <div class="col-md-12">
+    <h4 class="mb-3">Available Drivers</h4>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>NIC</th>
+        <th>License</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+        List<Driver> availableDriversList = (List<Driver>) request.getAttribute("availableDriversList");
+        if (availableDriversList != null && !availableDriversList.isEmpty()) {
+          for (Driver driver : availableDriversList) {
+      %>
+      <tr>
+        <td><%= driver.getDriverId() %></td>
+        <td><%= driver.getFirstName() + " " + driver.getLastName() %></td>
+        <td><%= driver.getPhoneNumber() %></td>
+        <td><%= driver.getNic() %></td>
+        <td><%= driver.getLicenseNumber() %></td>
+        <td><%= driver.getStatus() %></td>
+      </tr>
+      <%
+        }
+      } else {
+      %>
+      <tr>
+        <td colspan="6" class="text-center">No available drivers found.</td>
+      </tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Available Vehicles Table -->
+<div class="row mt-5">
+  <div class="col-md-12">
+    <h4 class="mb-3">Available Vehicles</h4>
+    <!-- Filter Dropdown -->
+    <form method="get" action="manage-bookings" class="mb-3">
+      <div class="input-group">
+        <select name="vehicleTypeFilter" class="form-select">
+          <option value="">All Types</option>
+          <option value="SUV" ${param.vehicleTypeFilter == 'SUV' ? 'selected' : ''}>SUV</option>
+          <option value="Sedan" ${param.vehicleTypeFilter == 'Sedan' ? 'selected' : ''}>Sedan</option>
+          <option value="Van" ${param.vehicleTypeFilter == 'Van' ? 'selected' : ''}>Van</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+    </form>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Vehicle Number</th>
+        <th>Color</th>
+        <th>Register Number</th>
+        <th>Model</th>
+        <th>Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+        List<Vehicle> availableVehiclesList = (List<Vehicle>) request.getAttribute("availableVehiclesList");
+        if (availableVehiclesList != null && !availableVehiclesList.isEmpty()) {
+          for (Vehicle vehicle : availableVehiclesList) {
+      %>
+      <tr>
+        <td><%= vehicle.getVehicleId() %></td>
+        <td><%= vehicle.getVehicleNumber() %></td>
+        <td><%= vehicle.getColor() %></td>
+        <td><%= vehicle.getRegisterNumber() %></td>
+        <td><%= vehicle.getModel() %></td>
+        <td><%= vehicle.getType() %></td>
+      </tr>
+      <%
+        }
+      } else {
+      %>
+      <tr>
+        <td colspan="6" class="text-center">No available vehicles found.</td>
+      </tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
