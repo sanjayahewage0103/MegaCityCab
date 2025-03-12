@@ -150,4 +150,22 @@
         <url-pattern>/customer-dashboard</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ManageBookingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.ManageBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageBookingServlet</servlet-name>
+        <url-pattern>/manage-bookings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CancelBookingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.CancelBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelBookingServlet</servlet-name>
+        <url-pattern>/admin/cancel-booking</url-pattern>
+    </servlet-mapping>
+
 </web-app>

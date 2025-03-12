@@ -309,13 +309,6 @@
     </style>
 </head>
 <body>
-<%--<!-- Theme Toggle -->--%>
-<%--<div class="theme-toggle">--%>
-<%--    <input type="checkbox" id="theme-switch">--%>
-<%--    <label for="theme-switch">--%>
-<%--        <i class="fas fa-adjust"></i>--%>
-<%--    </label>--%>
-<%--</div>--%>
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -337,7 +330,7 @@
             </h2>
             <div id="bookingMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-list"></i>Manage Booking</a>
+                    <a href="manage-bookings"><i class="fas fa-list"></i>Manage Booking</a>
                 </div>
             </div>
         </div>
