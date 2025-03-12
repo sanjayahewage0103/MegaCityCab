@@ -233,5 +233,50 @@ public class BookingDAO {
         }
     }
 
+    // Fetch booking details by I
+    public Booking getBookingDetailsById(int bookingId) throws SQLException {
+        String query = "SELECT * FROM bookings WHERE booking_id = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookingId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setCustomerId(rs.getInt("customer_id"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setTotalDistance(rs.getDouble("total_distance"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setNumPassengers(rs.getInt("num_passengers"));
+                booking.setPromoCodeUsed(rs.getString("promo_code_used"));
+                booking.setBasePrice(rs.getDouble("base_price"));
+                booking.setTaxAmount(rs.getDouble("tax_amount"));
+                booking.setDiscountAmount(rs.getDouble("discount_amount"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                booking.setPaymentMethod(rs.getString("payment_method"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCreatedAt(rs.getTimestamp("created_at"));
+                booking.setUpdatedAt(rs.getTimestamp("updated_at"));
+                return booking;
+            }
+        }
+        return null; // Return null if no booking is found
+    }
+
+
+    // Insert into vehicle_assignments table
+    public void assignVehicleAndDriver(int bookingId, int vehicleId, int driverId) throws SQLException {
+        String query = "INSERT INTO vehicle_assignments (booking_id, vehicle_id, driver_id, status) VALUES (?, ?, ?, 'Assigned')";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookingId);
+            stmt.setInt(2, vehicleId);
+            stmt.setInt(3, driverId);
+            stmt.executeUpdate();
+        }
+    }
 
 }

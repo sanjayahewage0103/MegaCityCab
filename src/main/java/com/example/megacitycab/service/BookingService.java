@@ -147,4 +147,9 @@ public class BookingService {
     public List<Booking> getAllBookingsByStatus(String status) throws SQLException {
         return bookingDAO.getAllBookingsByStatus(status);
     }
+
+    // Method to fetch booking details by ID
+    public Booking getBookingDetailsById(int bookingId) throws SQLException {
+        return bookingDAO.getBookingDetailsById(bookingId);
+    }
 }

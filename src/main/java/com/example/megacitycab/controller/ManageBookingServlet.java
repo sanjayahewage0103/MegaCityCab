@@ -45,32 +45,26 @@ public class ManageBookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Fetch counts for cards
             int totalBookings = bookingService.getTotalBookingCount();
             int pendingBookings = bookingService.getPendingBookingCount();
             int confirmedBookings = bookingService.getConfirmedBookingCount();
             int cancelledBookings = bookingService.getCancelledBookingCount();
 
-            // Set counts as request attributes
             request.setAttribute("totalBookings", totalBookings);
             request.setAttribute("pendingBookings", pendingBookings);
             request.setAttribute("confirmedBookings", confirmedBookings);
             request.setAttribute("cancelledBookings", cancelledBookings);
 
-            // Fetch pending bookings for the table
             List<Booking> pendingBookingsList = bookingService.getAllBookingsByStatus("Pending");
             request.setAttribute("pendingBookingsList", pendingBookingsList);
 
-            // Fetch available drivers for the table
             List<Driver> availableDriversList = driverService.getAvailableDrivers();
             request.setAttribute("availableDriversList", availableDriversList);
 
-            // Fetch available vehicles with optional filter
             String vehicleTypeFilter = request.getParameter("vehicleTypeFilter");
             List<Vehicle> availableVehiclesList = vehicleService.getAvailableVehicles(vehicleTypeFilter);
             request.setAttribute("availableVehiclesList", availableVehiclesList);
 
-            // Forward to the JSP
             request.getRequestDispatcher("manage-bookings.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
