@@ -69,9 +69,11 @@ public class ManageBookingServlet extends HttpServlet {
             List<Booking> cancelledBookingsList = bookingService.getCancelledBookingsWithDetails();
             request.setAttribute("cancelledBookingsList", cancelledBookingsList);
 
-            // Fetch completed bookings
             List<Booking> completedBookingsList = bookingService.getCompletedBookings();
             request.setAttribute("completedBookingsList", completedBookingsList);
+
+            List<Booking> allBookingsList = bookingService.getAllBookings();
+            request.setAttribute("allBookingsList", allBookingsList);
 
             request.getRequestDispatcher("manage-bookings.jsp").forward(request, response);
         } catch (SQLException e) {

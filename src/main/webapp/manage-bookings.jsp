@@ -108,14 +108,6 @@
         </div>
       </div>
 
-      <!-- Search Bar -->
-      <form method="get" action="manage-bookings" class="mb-4">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control" placeholder="Search bookings...">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </form>
-
       <!-- Tabs -->
       <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
@@ -129,6 +121,9 @@
         </li>
         <li class="nav-item">
           <a href="#completed" class="nav-link" data-bs-toggle="tab">Completed Bookings</a>
+        </li>
+        <li class="nav-item">
+          <a href="#All" class="nav-link" data-bs-toggle="tab">All Bookings</a>
         </li>
       </ul>
 
@@ -177,7 +172,53 @@
             </tbody>
           </table>
         </div>
-
+        <div class="tab-pane fade" id="All">
+          <!-- All Bookings Table -->
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <h4 class="mb-3">All Bookings</h4>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer ID</th>
+                  <th>Vehicle Type</th>
+                  <th>Pickup Location</th>
+                  <th>Drop Location</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Booking Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                  List<Booking> allBookingsList = (List<Booking>) request.getAttribute("allBookingsList");
+                  if (allBookingsList != null && !allBookingsList.isEmpty()) {
+                    for (Booking booking : allBookingsList) {
+                %>
+                <tr>
+                  <td><%= booking.getBookingId() %></td>
+                  <td><%= booking.getCustomerId() %></td>
+                  <td><%= booking.getVehicleType() %></td>
+                  <td><%= booking.getPickupLocation() %></td>
+                  <td><%= booking.getDropLocation() %></td>
+                  <td><%= booking.getDate() %></td>
+                  <td><%= booking.getTime() %></td>
+                  <td><%= booking.getStatus() %></td>
+                </tr>
+                <%
+                  }
+                } else {
+                %>
+                <tr>
+                  <td colspan="8" class="text-center">No bookings found.</td>
+                </tr>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
         <!-- Confirmed Bookings -->
         <div class="tab-pane fade" id="confirmed">
           <!-- Confirmed Bookings Table -->
@@ -451,37 +492,7 @@
     </table>
   </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="activityModalLabel">Activity Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%
-          Booking activityDetails = (Booking) request.getAttribute("activityDetails");
-          if (activityDetails != null) {
-        %>
-        <p><strong>Customer Name:</strong> <%= activityDetails.getCustomerName() %></p>
-        <p><strong>Driver Name:</strong> <%= activityDetails.getDriverName() %></p>
-        <p><strong>Vehicle Number:</strong> <%= activityDetails.getVehicleNumber() %></p>
-        <p><strong>Vehicle Type:</strong> <%= activityDetails.getVehicleType() %></p>
-        <p><strong>Pickup Location:</strong> <%= activityDetails.getPickupLocation() %></p>
-        <p><strong>Drop Location:</strong> <%= activityDetails.getDropLocation() %></p>
-        <p><strong>Date:</strong> <%= activityDetails.getDate() %></p>
-        <p><strong>Time:</strong> <%= activityDetails.getTime() %></p>
-        <p><strong>Payment Method:</strong> <%= activityDetails.getPaymentMethod() %></p>
-        <p><strong>Total Distance:</strong> <%= activityDetails.getTotalDistance() %> km</p>
-        <p><strong>Final Amount:</strong> $<%= activityDetails.getFinalAmount() %></p>
-        <% } else { %>
-        <p>No activity details found.</p>
-        <% } %>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

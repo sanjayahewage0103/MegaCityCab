@@ -24,7 +24,9 @@ public class BookingService {
         this.pricingDAO = pricingDAO;
     }
 
-
+    public List<Booking> getAllBookings() throws SQLException {
+        return bookingDAO.getAllBookings();
+    }
 
     // Method to update booking status
     public void updateBookingStatus(int bookingId, String status) throws SQLException {
