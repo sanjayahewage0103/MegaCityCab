@@ -152,23 +152,26 @@ public class DriverDAO {
         return drivers;
     }
 
-
+    // Fetch all avaistatus = 'active'lable drivers ()
     public List<Driver> getAvailableDrivers() throws SQLException {
-        String query = "SELECT * FROM drivers WHERE status = 'Available'";
+        String query = "SELECT * FROM drivers WHERE status = 'active'";
         List<Driver> drivers = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Driver driver = new Driver();
                 driver.setDriverId(rs.getInt("driver_id"));
                 driver.setFirstName(rs.getString("first_name"));
                 driver.setLastName(rs.getString("last_name"));
                 driver.setPhoneNumber(rs.getString("phone_number"));
+                driver.setNic(rs.getString("nic"));
+                driver.setLicenseNumber(rs.getString("license_number"));
+                driver.setStatus(rs.getString("status"));
                 drivers.add(driver);
             }
         }
         return drivers;
     }
+
 }
