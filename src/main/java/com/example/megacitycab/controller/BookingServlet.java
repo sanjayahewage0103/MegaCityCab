@@ -110,7 +110,6 @@ public class BookingServlet extends HttpServlet {
 
         double basePrice = 0;
 
-        // Calculate base price based on distance segments
         if (totalDistance <= 10) {
             basePrice += totalDistance * pricing.getPricePerKmBelow10();
         } else if (totalDistance <= 20) {

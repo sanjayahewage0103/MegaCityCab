@@ -1,8 +1,10 @@
 package com.example.megacitycab.controller;
 
 import com.example.megacitycab.dao.BookingDAO;
+import com.example.megacitycab.dao.PaymentDAO;
 import com.example.megacitycab.model.Booking;
 
+import com.example.megacitycab.model.Payment;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,11 +15,14 @@ import java.sql.SQLException;
 
 public class ConfirmBookingServlet extends HttpServlet {
     private BookingDAO bookingDAO;
+    private PaymentDAO paymentDAO;
 
     @Override
     public void init() throws ServletException {
         try {
             bookingDAO = new BookingDAO();
+            paymentDAO = new PaymentDAO();
+
         } catch (SQLException e) {
             throw new ServletException("Failed to initialize BookingDAO", e);
         }
@@ -58,8 +63,19 @@ public class ConfirmBookingServlet extends HttpServlet {
             booking.setPaymentMethod(paymentMethod);
             booking.setStatus("Pending");
 
-            bookingDAO.saveBooking(booking);
+            int bookingId = bookingDAO.saveBookingAndGetId(booking);
 
+            // Create a Payment object
+            Payment payment = new Payment();
+            payment.setBookingId(bookingId);
+            payment.setAmountPaid(finalFare); // Amount paid is the final fare
+            payment.setPaymentMethod(paymentMethod);
+            payment.setPaymentStatus("Pending"); // Payment status is initially "Pending"
+
+            // Save the payment details to the payments table
+            paymentDAO.savePayment(payment);
+
+            // Redirect to the confirmation page
             response.sendRedirect("booking-confirmation.jsp?message=Booking confirmed successfully! Awaiting admin approval.");
         } catch (SQLException e) {
             System.err.println("Database error occurred: " + e.getMessage());
