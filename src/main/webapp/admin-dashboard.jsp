@@ -498,7 +498,11 @@
                     <i class="fas fa-id-badge"></i> Driver
                 </button>
             </a>
-            <button class="btn w-100"><i class="fas fa-taxi"></i>Book Ride</button>
+            <a href="view-confirmed-bookings" class="text-decoration-none" style="color: inherit;">
+                <button class="btn w-100 mb-3">
+                    <i class="fas fa-id-badge"></i> booking
+                </button>
+            </a>
         </div>
         <div class="col-md-4">
             <button class="btn w-100 mb-3"><i class="fas fa-file-invoice-dollar"></i>Bill Payment</button>
