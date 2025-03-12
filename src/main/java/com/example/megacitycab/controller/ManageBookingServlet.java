@@ -25,7 +25,6 @@ public class ManageBookingServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         try {
-            // Initialize DAO objects
             BookingDAO bookingDAO = new BookingDAO();
             VehicleDAO vehicleDAO = new VehicleDAO();
             PromoCodeDAO promoCodeDAO = new PromoCodeDAO();
@@ -33,7 +32,6 @@ public class ManageBookingServlet extends HttpServlet {
             PricingDAO pricingDAO = new PricingDAO();
             DriverDAO driverDAO = new DriverDAO();
 
-            // Pass DAO objects to services
             bookingService = new BookingService(bookingDAO, vehicleDAO, promoCodeDAO, discountDAO, pricingDAO);
             driverService = new DriverService(driverDAO);
             vehicleService = new VehicleService(vehicleDAO); // Use the new constructor
@@ -59,13 +57,37 @@ public class ManageBookingServlet extends HttpServlet {
             request.setAttribute("pendingBookingsList", pendingBookingsList);
 
             List<Driver> availableDriversList = driverService.getAvailableDrivers();
-            request.setAttribute("availableDriversList", availableDriversList);
-
             String vehicleTypeFilter = request.getParameter("vehicleTypeFilter");
             List<Vehicle> availableVehiclesList = vehicleService.getAvailableVehicles(vehicleTypeFilter);
+
+            request.setAttribute("availableDriversList", availableDriversList);
             request.setAttribute("availableVehiclesList", availableVehiclesList);
 
+            List<Booking> confirmedBookingsList = bookingService.getConfirmedBookingsWithDetails();
+            request.setAttribute("confirmedBookingsList", confirmedBookingsList);
+
+            List<Booking> cancelledBookingsList = bookingService.getCancelledBookingsWithDetails();
+            request.setAttribute("cancelledBookingsList", cancelledBookingsList);
+
+            // Fetch completed bookings
+            List<Booking> completedBookingsList = bookingService.getCompletedBookings();
+            request.setAttribute("completedBookingsList", completedBookingsList);
+
             request.getRequestDispatcher("manage-bookings.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("/error.jsp?message=Database error occurred.");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+            Booking activityDetails = bookingService.getActivityDetails(bookingId);
+            request.setAttribute("activityDetails", activityDetails);
+
+            request.getRequestDispatcher("modal-activity.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp?message=Database error occurred.");

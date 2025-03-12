@@ -127,6 +127,9 @@
         <li class="nav-item">
           <a href="#cancelled" class="nav-link" data-bs-toggle="tab">Cancelled Bookings</a>
         </li>
+        <li class="nav-item">
+          <a href="#completed" class="nav-link" data-bs-toggle="tab">Completed Bookings</a>
+        </li>
       </ul>
 
       <!-- Tab Content -->
@@ -177,13 +180,179 @@
 
         <!-- Confirmed Bookings -->
         <div class="tab-pane fade" id="confirmed">
-          <p>Confirmed bookings will be displayed here.</p>
+          <!-- Confirmed Bookings Table -->
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <h4 class="mb-3">Confirmed Bookings</h4>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer ID</th>
+                  <th>Vehicle Type</th>
+                  <th>Pickup Location</th>
+                  <th>Drop Location</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Final Amount</th>
+                  <th>Payment Method</th>
+                  <th>Payment Status</th>
+                  <th>Vehicle Number</th>
+                  <th>Driver Name</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                  List<Booking> confirmedBookingsList = (List<Booking>) request.getAttribute("confirmedBookingsList");
+                  if (confirmedBookingsList != null && !confirmedBookingsList.isEmpty()) {
+                    for (Booking booking : confirmedBookingsList) {
+                %>
+                <tr>
+                  <td><%= booking.getBookingId() %></td>
+                  <td><%= booking.getCustomerId() %></td>
+                  <td><%= booking.getVehicleType() %></td>
+                  <td><%= booking.getPickupLocation() %></td>
+                  <td><%= booking.getDropLocation() %></td>
+                  <td><%= booking.getDate() %></td> <!-- Separate Date Column -->
+                  <td><%= booking.getTime() %></td> <!-- Separate Time Column -->
+                  <td><%= booking.getFinalAmount() %></td>
+                  <td><%= booking.getPaymentMethod() %></td>
+                  <td><%= booking.getPaymentStatus() %></td>
+                  <td><%= booking.getVehicleNumber() %></td>
+                  <td><%= booking.getDriverName() %></td>
+                  <td>
+                    <form action="complete-booking" method="post" style="display:inline;">
+                      <input type="hidden" name="bookingId" value="<%= booking.getBookingId() %>">
+                      <button type="submit" class="btn btn-success btn-sm">Complete</button>
+                    </form>
+                  </td>
+                </tr>
+                <%
+                  }
+                } else {
+                %>
+                <tr>
+                  <td colspan="13" class="text-center">No confirmed bookings found.</td>
+                </tr>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <!-- Cancelled Bookings -->
         <div class="tab-pane fade" id="cancelled">
-          <p>Cancelled bookings will be displayed here.</p>
+          <!-- Cancelled Bookings Table -->
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <h4 class="mb-3">Cancelled Bookings</h4>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer ID</th>
+                  <th>Vehicle Type</th>
+                  <th>Pickup Location</th>
+                  <th>Drop Location</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Final Amount</th>
+                  <th>Payment Method</th>
+                  <th>Payment Status</th>
+                  <th>Vehicle Number</th>
+                  <th>Driver Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                  List<Booking> cancelledBookingsList = (List<Booking>) request.getAttribute("cancelledBookingsList");
+                  if (cancelledBookingsList != null && !cancelledBookingsList.isEmpty()) {
+                    for (Booking booking : cancelledBookingsList) {
+                %>
+                <tr>
+                  <td><%= booking.getBookingId() %></td>
+                  <td><%= booking.getCustomerId() %></td>
+                  <td><%= booking.getVehicleType() %></td>
+                  <td><%= booking.getPickupLocation() %></td>
+                  <td><%= booking.getDropLocation() %></td>
+                  <td><%= booking.getDate() %></td>
+                  <td><%= booking.getTime() %></td>
+                  <td><%= booking.getFinalAmount() %></td>
+                  <td><%= booking.getPaymentMethod() %></td>
+                  <td><%= booking.getPaymentStatus() %></td>
+                  <td><%= booking.getVehicleNumber() %></td>
+                  <td><%= booking.getDriverName() %></td>
+                </tr>
+                <%
+                  }
+                } else {
+                %>
+                <tr>
+                  <td colspan="12" class="text-center">No cancelled bookings found.</td>
+                </tr>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+        <!-- Cancelled Bookings -->
+        <div class="tab-pane fade" id="completed">
+          <!-- Completed Bookings Table -->
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <h4 class="mb-3">Completed Bookings</h4>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer ID</th>
+                  <th>Vehicle ID</th>
+                  <th>Driver ID</th>
+                  <th>Payment ID</th>
+                  <th>Payment Method</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                  List<Booking> completedBookingsList = (List<Booking>) request.getAttribute("completedBookingsList");
+                  if (completedBookingsList != null && !completedBookingsList.isEmpty()) {
+                    for (Booking booking : completedBookingsList) {
+                %>
+                <tr>
+                  <td><%= booking.getBookingId() %></td>
+                  <td><%= booking.getCustomerId() %></td>
+                  <td><%= booking.getVehicleId() %></td>
+                  <td><%= booking.getDriverId() %></td>
+                  <td><%= booking.getPaymentId() %></td>
+                  <td><%= booking.getPaymentMethod() %></td>
+                  <td><%= booking.getDate() %></td>
+                  <td><%= booking.getTime() %></td>
+                  <td>
+                    <form action="manage-bookings" method="post" style="display:inline;">
+                      <input type="hidden" name="bookingId" value="<%= booking.getBookingId() %>">
+                      <button type="submit" class="btn btn-info btn-sm">View Activity</button>
+                    </form>
+                  </td>
+                </tr>
+                <%
+                  }
+                } else {
+                %>
+                <tr>
+                  <td colspan="9" class="text-center">No completed bookings found.</td>
+                </tr>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>        </div>
+
       </div>
     </div>
   </div>
@@ -282,7 +451,38 @@
     </table>
   </div>
 </div>
-<!-- Bootstrap JS Bundle -->
+<!-- Modal -->
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="activityModalLabel">Activity Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%
+          Booking activityDetails = (Booking) request.getAttribute("activityDetails");
+          if (activityDetails != null) {
+        %>
+        <p><strong>Customer Name:</strong> <%= activityDetails.getCustomerName() %></p>
+        <p><strong>Driver Name:</strong> <%= activityDetails.getDriverName() %></p>
+        <p><strong>Vehicle Number:</strong> <%= activityDetails.getVehicleNumber() %></p>
+        <p><strong>Vehicle Type:</strong> <%= activityDetails.getVehicleType() %></p>
+        <p><strong>Pickup Location:</strong> <%= activityDetails.getPickupLocation() %></p>
+        <p><strong>Drop Location:</strong> <%= activityDetails.getDropLocation() %></p>
+        <p><strong>Date:</strong> <%= activityDetails.getDate() %></p>
+        <p><strong>Time:</strong> <%= activityDetails.getTime() %></p>
+        <p><strong>Payment Method:</strong> <%= activityDetails.getPaymentMethod() %></p>
+        <p><strong>Total Distance:</strong> <%= activityDetails.getTotalDistance() %> km</p>
+        <p><strong>Final Amount:</strong> $<%= activityDetails.getFinalAmount() %></p>
+        <% } else { %>
+        <p>No activity details found.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -20,9 +20,16 @@ public class Booking {
     private String paymentMethod;
     private String status;
     private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private Timestamp updatedAt; // Add this line to declare the updatedAt field
+    private String paymentStatus;
+    private String vehicleNumber;
+    private String driverName;
 
-    // Constructors
+    private int driverId;
+    private int paymentId;
+    private String customerName;
+    private int vehicleId;
+
     public Booking() {}
 
     public Booking(int customerId, String vehicleType, String pickupLocation, String dropLocation, double totalDistance,
@@ -43,9 +50,10 @@ public class Booking {
         this.finalAmount = finalAmount;
         this.paymentMethod = paymentMethod;
         this.status = status;
+        this.vehicleId = vehicleId;
     }
 
-    // Getters and Setters
+
     public int getBookingId() {
         return bookingId;
     }
@@ -190,6 +198,62 @@ public class Booking {
         this.updatedAt = updatedAt;
     }
 
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public int getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
+    }
+
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public int getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -211,6 +275,12 @@ public class Booking {
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", vehicleNumber='" + vehicleNumber + '\'' +
+                ", driverName='" + driverName + '\'' +
+                ", paymentStatus='" + paymentStatus + '\'' +
+                ", driverId=" + driverId +
+                ", paymentId=" + paymentId +
+                ", customerName='" + customerName + '\'' +
                 '}';
     }
 }
