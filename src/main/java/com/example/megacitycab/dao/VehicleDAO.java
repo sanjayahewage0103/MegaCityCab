@@ -123,5 +123,24 @@ public class VehicleDAO {
         return null;
     }
 
+    public List<Vehicle> getAvailableVehiclesByType(String vehicleType) throws SQLException {
+        String query = "SELECT * FROM vehicles WHERE type = ? AND status = 'Available'";
+        List<Vehicle> vehicles = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, vehicleType);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Vehicle vehicle = new Vehicle();
+                vehicle.setVehicleId(rs.getInt("vehicle_id"));
+                vehicle.setVehicleNumber(rs.getString("vehicle_number"));
+                vehicle.setType(rs.getString("type"));
+                vehicles.add(vehicle);
+            }
+        }
+        return vehicles;
+    }
 
 }
