@@ -2,7 +2,6 @@ package com.example.megacitycab.service;
 
 import com.example.megacitycab.dao.*;
 import com.example.megacitycab.model.*;
-import jakarta.servlet.ServletException;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -25,6 +24,7 @@ public class BookingService {
         this.pricingDAO = pricingDAO;
     }
 
+    // Method to create a new booking
     public void createBooking(Booking booking) throws SQLException {
         Vehicle vehicle = vehicleDAO.getVehicleByType(booking.getVehicleType());
         if (booking.getNumPassengers() > vehicle.getSeatingCapacity()) {
@@ -46,22 +46,27 @@ public class BookingService {
         bookingDAO.addBooking(booking);
     }
 
+    // Method to fetch all bookings
     public List<Booking> getAllBookings() throws SQLException {
         return bookingDAO.getAllBookings();
     }
 
+    // Method to fetch booking details by ID
     public Booking getBookingDetails(int bookingId) throws SQLException {
         return bookingDAO.getBookingById(bookingId);
     }
 
+    // Method to update booking status
     public void updateBookingStatus(int bookingId, String status) throws SQLException {
         bookingDAO.updateBookingStatus(bookingId, status);
     }
 
+    // Method to cancel a booking
     public void cancelBooking(int bookingId) throws SQLException {
         updateBookingStatus(bookingId, "Cancelled");
     }
 
+    // Method to calculate fare
     public double calculateFare(String vehicleType, double totalDistance, String promoCode) throws SQLException {
         Pricing pricing = pricingDAO.getPricingByVehicleType(vehicleType);
 
@@ -103,5 +108,43 @@ public class BookingService {
         }
 
         return finalFare;
+    }
+
+    // Method to fetch all pending bookings
+    public List<Booking> getPendingBookings() throws SQLException {
+        return bookingDAO.getAllBookingsByStatus("Pending");
+    }
+
+    // Method to count pending bookings
+    public int getPendingBookingCount() throws SQLException {
+        return bookingDAO.getPendingBookingCount();
+    }
+
+    // Method to fetch confirmed bookings
+    public List<Booking> getConfirmedBookings() throws SQLException {
+        return bookingDAO.getAllBookingsByStatus("Confirmed");
+    }
+
+    // Method to fetch cancelled bookings
+    public List<Booking> getCancelledBookings() throws SQLException {
+        return bookingDAO.getAllBookingsByStatus("Cancelled");
+    }
+
+    // Method to count confirmed bookings
+    public int getConfirmedBookingCount() throws SQLException {
+        return bookingDAO.getConfirmedBookingCount();
+    }
+
+    // Method to count cancelled bookings
+    public int getCancelledBookingCount() throws SQLException {
+        return bookingDAO.getCancelledBookingCount();
+    }
+
+    public int getTotalBookingCount() throws SQLException {
+        return bookingDAO.getTotalBookingCount();
+    }
+
+    public List<Booking> getAllBookingsByStatus(String status) throws SQLException {
+        return bookingDAO.getAllBookingsByStatus(status);
     }
 }
