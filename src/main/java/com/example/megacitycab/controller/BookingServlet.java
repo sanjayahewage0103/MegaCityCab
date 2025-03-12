@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class BookingServlet extends HttpServlet {
     private PricingDAO pricingDAO;
@@ -32,6 +33,23 @@ public class BookingServlet extends HttpServlet {
         } catch (SQLException e) {
             System.err.println("Failed to initialize DAOs: " + e.getMessage());
             throw new ServletException("Failed to initialize DAOs", e);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // Fetch unique locations from the database using DistanceDAO
+            Set<String> locations = distanceDAO.getAllUniqueLocations();
+
+            // Pass locations as request attributes
+            request.setAttribute("locations", locations);
+
+            // Forward to the JSP
+            request.getRequestDispatcher("booking-form.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("/error.jsp?message=Database error occurred.");
         }
     }
 
