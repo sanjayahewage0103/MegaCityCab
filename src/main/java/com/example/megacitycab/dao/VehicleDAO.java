@@ -155,4 +155,45 @@ public class VehicleDAO {
         return vehicles;
     }
 
+    public List<Vehicle> getAvailableVehiclesByType(String type) throws SQLException {
+        String query = "SELECT * FROM vehicle WHERE status = 'Available'";
+        if (type != null && !type.isEmpty()) {
+            query += " AND type = ?";
+        }
+
+        List<Vehicle> vehicles = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            if (type != null && !type.isEmpty()) {
+                stmt.setString(1, type);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Vehicle vehicle = new Vehicle();
+                vehicle.setVehicleId(rs.getInt("vehicle_id"));
+                vehicle.setVehicleNumber(rs.getString("vehicle_number"));
+                vehicle.setColor(rs.getString("color"));
+                vehicle.setRegisterNumber(rs.getString("register_number"));
+                vehicle.setModel(rs.getString("model"));
+                vehicle.setType(rs.getString("type"));
+                vehicle.setSeatingCapacity(rs.getInt("seating_capacity"));
+                vehicle.setStatus(rs.getString("status"));
+                vehicles.add(vehicle);
+            }
+        }
+        return vehicles;
+    }
+
+    // Method to update vehicle status
+    public void updateVehicleStatus(int vehicleId, String status) throws SQLException {
+        String query = "UPDATE vehicle SET status = ? WHERE vehicle_id = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, vehicleId);
+            stmt.executeUpdate();
+        }
+    }
 }

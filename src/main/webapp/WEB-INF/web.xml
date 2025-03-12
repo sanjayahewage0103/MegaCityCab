@@ -168,4 +168,12 @@
         <url-pattern>/admin/cancel-booking</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AssignBookingServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.AssignBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AssignBookingServlet</servlet-name>
+        <url-pattern>/assign-booking</url-pattern>
+    </servlet-mapping>
 </web-app>

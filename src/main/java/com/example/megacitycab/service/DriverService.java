@@ -58,4 +58,8 @@ public class DriverService {
     public List<Driver> getAvailableDrivers() throws SQLException {
         return driverDAO.getAvailableDrivers();
     }
+
+    public void updateDriverStatus(int driverId, String status) throws SQLException {
+        driverDAO.updateDriverStatus(driverId, status);
+    }
 }

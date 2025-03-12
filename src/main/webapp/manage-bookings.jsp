@@ -160,7 +160,7 @@
               <td><%= booking.getTime() %></td>
               <td><%= booking.getFinalAmount() %></td>
               <td>
-                <a href="assign.jsp?bookingId=<%= booking.getBookingId() %>" class="btn btn-sm btn-primary btn-action">Assign</a>
+                <a href="assign-booking?bookingId=<%= booking.getBookingId() %>" class="btn btn-sm btn-primary btn-action">Assign</a>
                 <a href="${pageContext.request.contextPath}/admin/cancel-booking?bookingId=<%= booking.getBookingId() %>"
                    class="btn btn-sm btn-danger btn-action">Cancel</a>
               </td>

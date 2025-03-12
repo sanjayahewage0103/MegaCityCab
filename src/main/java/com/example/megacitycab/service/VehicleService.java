@@ -43,4 +43,9 @@ public class VehicleService {
     public List<Vehicle> getAvailableVehicles(String type) throws SQLException {
         return vehicleDAO.getAvailableVehicles(type);
     }
+
+    // Method to update vehicle status
+    public void updateVehicleStatus(int vehicleId, String status) throws SQLException {
+        vehicleDAO.updateVehicleStatus(vehicleId, status);
+    }
 }
