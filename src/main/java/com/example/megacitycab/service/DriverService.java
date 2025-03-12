@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DriverService {
-    private DriverDAO driverDAO;
+    private final DriverDAO driverDAO;
 
+    // Existing no-argument constructor
     public DriverService() throws SQLException {
         this.driverDAO = new DriverDAO();
+    }
+
+    // New constructor to accept a DriverDAO object
+    public DriverService(DriverDAO driverDAO) {
+        this.driverDAO = driverDAO;
     }
 
     public List<Driver> getAllDrivers() throws SQLException {
@@ -46,5 +52,10 @@ public class DriverService {
 
     public List<Driver> searchDrivers(String query) throws SQLException {
         return driverDAO.searchDrivers(query);
+    }
+
+    // Method to fetch all available drivers
+    public List<Driver> getAvailableDrivers() throws SQLException {
+        return driverDAO.getAvailableDrivers();
     }
 }
