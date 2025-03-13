@@ -19,6 +19,13 @@ public class Payment {
     private double finalAmount;
     private String encryptedDetails;
 
+    // Newly added fields
+    private int customerId;
+    private String customerName;
+    private String driverName;
+    private String vehicleNumber;
+
+    // Existing getters and setters remain unchanged
 
     public int getPaymentId() {
         return paymentId;
@@ -138,5 +145,38 @@ public class Payment {
 
     public void setEncryptedDetails(String encryptedDetails) {
         this.encryptedDetails = encryptedDetails;
+    }
+
+    // Getters and setters for newly added fields
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
     }
 }

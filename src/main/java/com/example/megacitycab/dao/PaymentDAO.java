@@ -210,4 +210,188 @@ public class PaymentDAO {
         }
         return completedPayments;
     }
+
+    public List<Payment> getAllPayments() throws SQLException {
+        String query = """
+            SELECT b.booking_id, c.customer_id, b.vehicle_type, b.final_amount,
+                   p.payment_method, p.payment_status, p.transaction_id, e.encrypted_details
+            FROM bookings b
+            LEFT JOIN customer c ON b.customer_id = c.customer_id
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            LEFT JOIN encrypted_card_details e ON b.booking_id = e.booking_id
+        """;
+        List<Payment> payments = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setBookingId(rs.getInt("booking_id"));
+                payment.setCustomerId(rs.getInt("customer_id"));
+                payment.setVehicleType(rs.getString("vehicle_type"));
+                payment.setFinalAmount(rs.getDouble("final_amount"));
+                payment.setPaymentMethod(rs.getString("payment_method"));
+                payment.setPaymentStatus(rs.getString("payment_status"));
+                payment.setTransactionId(rs.getString("transaction_id"));
+                payment.setEncryptedDetails(rs.getString("encrypted_details"));
+                payments.add(payment);
+            }
+        }
+        return payments;
+    }
+
+    // Fetch detailed payment information for a specific booking
+    public Payment getPaymentDetails(int bookingId) throws SQLException {
+        String query = """
+            SELECT b.booking_id, c.customer_id, c.name AS customer_name,
+                   b.vehicle_type, b.pickup_location, b.drop_location, b.date, b.time,
+                   b.final_amount, p.payment_method, p.payment_status, p.transaction_id,
+                   e.encrypted_details, d.first_name AS driver_first_name, d.last_name AS driver_last_name,
+                   v.vehicle_number
+            FROM bookings b
+            LEFT JOIN customer c ON b.customer_id = c.customer_id
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            LEFT JOIN encrypted_card_details e ON b.booking_id = e.booking_id
+            LEFT JOIN vehicle_assignments va ON b.booking_id = va.booking_id
+            LEFT JOIN drivers d ON va.driver_id = d.driver_id
+            LEFT JOIN vehicle v ON va.vehicle_id = v.vehicle_id
+            WHERE b.booking_id = ?
+        """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookingId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Payment payment = new Payment();
+                payment.setBookingId(rs.getInt("booking_id"));
+                payment.setCustomerId(rs.getInt("customer_id"));
+                payment.setCustomerName(rs.getString("customer_name"));
+                payment.setVehicleType(rs.getString("vehicle_type"));
+                payment.setPickupLocation(rs.getString("pickup_location"));
+                payment.setDropLocation(rs.getString("drop_location"));
+                payment.setDate(rs.getString("date"));
+                payment.setTime(rs.getString("time"));
+                payment.setFinalAmount(rs.getDouble("final_amount"));
+                payment.setPaymentMethod(rs.getString("payment_method"));
+                payment.setPaymentStatus(rs.getString("payment_status"));
+                payment.setTransactionId(rs.getString("transaction_id"));
+                payment.setEncryptedDetails(rs.getString("encrypted_details"));
+                payment.setDriverName(rs.getString("driver_first_name") + " " + rs.getString("driver_last_name"));
+                payment.setVehicleNumber(rs.getString("vehicle_number"));
+                return payment;
+            }
+        }
+        return null;
+    }
+    public List<Payment> getPendingPayments() throws SQLException {
+        String query = """
+        SELECT b.booking_id, c.name AS customer_name, b.vehicle_type,
+               b.pickup_location, b.drop_location, b.date, b.time, b.final_amount
+        FROM bookings b
+        LEFT JOIN customer c ON b.customer_id = c.customer_id
+        LEFT JOIN payments p ON b.booking_id = p.booking_id
+        WHERE p.payment_status = 'Pending'
+    """;
+        List<Payment> pendingPayments = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setBookingId(rs.getInt("booking_id"));
+                payment.setCustomerName(rs.getString("customer_name"));
+                payment.setVehicleType(rs.getString("vehicle_type"));
+                payment.setPickupLocation(rs.getString("pickup_location"));
+                payment.setDropLocation(rs.getString("drop_location"));
+                payment.setDate(rs.getString("date"));
+                payment.setTime(rs.getString("time"));
+                payment.setFinalAmount(rs.getDouble("final_amount"));
+                pendingPayments.add(payment);
+            }
+        }
+        return pendingPayments;
+    }
+
+    public List<Payment> getCompletedPayments() throws SQLException {
+        String query = """
+        SELECT b.booking_id, c.customer_id, b.vehicle_type, b.final_amount,
+               p.payment_method, p.payment_status, p.transaction_id, e.encrypted_details
+        FROM bookings b
+        LEFT JOIN customer c ON b.customer_id = c.customer_id
+        LEFT JOIN payments p ON b.booking_id = p.booking_id
+        LEFT JOIN encrypted_card_details e ON b.booking_id = e.booking_id
+        WHERE p.payment_status = 'Success'
+    """;
+        List<Payment> completedPayments = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setBookingId(rs.getInt("booking_id"));
+                payment.setCustomerId(rs.getInt("customer_id"));
+                payment.setVehicleType(rs.getString("vehicle_type"));
+                payment.setFinalAmount(rs.getDouble("final_amount"));
+                payment.setPaymentMethod(rs.getString("payment_method"));
+                payment.setPaymentStatus(rs.getString("payment_status"));
+                payment.setTransactionId(rs.getString("transaction_id"));
+                payment.setEncryptedDetails(rs.getString("encrypted_details"));
+                completedPayments.add(payment);
+            }
+        }
+        return completedPayments;
+    }
+
+    public double getTotalIncome() throws SQLException {
+        String query = """
+        SELECT SUM(final_amount) AS total_income
+        FROM bookings
+    """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("total_income");
+            }
+        }
+        return 0.0;
+    }
+
+    public double getTotalPendingIncome() throws SQLException {
+        String query = """
+        SELECT SUM(final_amount) AS pending_income
+        FROM bookings b
+        LEFT JOIN payments p ON b.booking_id = p.booking_id
+        WHERE p.payment_status = 'Pending'
+    """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("pending_income");
+            }
+        }
+        return 0.0;
+    }
+
+    public double getTotalCompletedIncome() throws SQLException {
+        String query = """
+        SELECT SUM(final_amount) AS completed_income
+        FROM bookings b
+        LEFT JOIN payments p ON b.booking_id = p.booking_id
+        WHERE p.payment_status = 'Success'
+    """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("completed_income");
+            }
+        }
+        return 0.0;
+    }
 }

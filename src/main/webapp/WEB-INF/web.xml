@@ -195,4 +195,14 @@
         <servlet-name>CustomerBookingManageServlet</servlet-name>
         <url-pattern>/customer-booking-manage</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminManagePaymentsServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.AdminManagePaymentsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminManagePaymentsServlet</servlet-name>
+        <url-pattern>/admin-manage-payments</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -57,4 +57,30 @@ public class PaymentService {
         return paymentDAO.getCompletedBookingDetails(bookingId);
     }
 
+    public List<Payment> getAllPayments() throws SQLException {
+        return paymentDAO.getAllPayments();
+    }
+
+    // Fetch detailed payment information for a specific booking
+    public Payment getPaymentDetails(int bookingId) throws SQLException {
+        return paymentDAO.getPaymentDetails(bookingId);
+    }
+    public List<Payment> getPendingPayments() throws SQLException {
+        return paymentDAO.getPendingPayments();
+    }
+    public List<Payment> getCompletedPayments() throws SQLException {
+        return paymentDAO.getCompletedPayments();
+    }
+
+    public double getTotalIncome() throws SQLException {
+        return paymentDAO.getTotalIncome();
+    }
+
+    public double getTotalPendingIncome() throws SQLException {
+        return paymentDAO.getTotalPendingIncome();
+    }
+
+    public double getTotalCompletedIncome() throws SQLException {
+        return paymentDAO.getTotalCompletedIncome();
+    }
 }

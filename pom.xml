@@ -49,6 +49,27 @@
             <version>7.2.5</version>
         </dependency>
 
+        <!-- iText Core -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.2.5</version> <!-- Use the latest version -->
+        </dependency>
+
+        <!-- iText Layout -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.2.5</version> <!-- Use the latest version -->
+        </dependency>
+
+        <!-- Optional: iText IO for handling images -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
+            <version>7.2.5</version> <!-- Use the latest version -->
+        </dependency>
+
     </dependencies>
 
     <build>
