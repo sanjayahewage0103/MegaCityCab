@@ -423,8 +423,8 @@
     </div>
 
     <div class="sidebar-footer mt-4 px-3">
-        <a href="#" class="sidebar-toggle text-white text-decoration-none">
-            <i class="fas fa-question-circle menu-icon"></i> FAQ
+        <a href="help.jsp" class="sidebar-toggle text-white text-decoration-none">
+            <i class="fas fa-question-circle menu-icon"></i> Help
         </a>
         <a href="logout" class="sidebar-toggle text-white text-decoration-none mt-2">
             <i class="fas fa-sign-out-alt menu-icon"></i> Logout

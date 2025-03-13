@@ -408,6 +408,7 @@
                     <div class="profile-dropdown-content">
                         <a href="login.jsp"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
                         <a href="register.jsp"><i class="fas fa-user-plus me-2"></i>Sign Up</a>
+                        <a href="customer-help-support.jsp"><i class="fas fa-user-plus me-2"></i>Help</a>
                     </div>
                 </li>
             </ul>

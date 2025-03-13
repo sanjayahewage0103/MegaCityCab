@@ -493,12 +493,12 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="help.jsp">
+                <a href="customer-help-support.jsp">
                     <i class="fas fa-question-circle"></i> Help & Support
                 </a>
             </li>
             <li class="menu-item">
-                <a href="logout">
+                <a href="userlogout">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </li>
