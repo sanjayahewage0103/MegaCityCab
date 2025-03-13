@@ -195,5 +195,4 @@
         <servlet-name>CustomerBookingManageServlet</servlet-name>
         <url-pattern>/customer-booking-manage</url-pattern>
     </servlet-mapping>
-
 </web-app>

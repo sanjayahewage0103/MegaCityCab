@@ -12,8 +12,6 @@
 <body>
 <div class="container mt-5">
   <h2 class="mb-4">Customer Booking Management</h2>
-
-
   <!-- Section 1: Pending Bookings -->
   <div class="card mb-4">
     <div class="card-header bg-primary text-white">

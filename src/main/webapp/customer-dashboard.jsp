@@ -480,7 +480,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="payment-activity.jsp">
+                <a href="make-payment">
                     <i class="fas fa-credit-card"></i> Payments
                 </a>
             </li>
