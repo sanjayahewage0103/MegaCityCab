@@ -407,16 +407,16 @@
             <h2 class="accordion-header">
                 <button class="sidebar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#billMenu">
                     <div>
-                        <i class="fas fa-file-invoice-dollar menu-icon"></i> Bill Management
+                        <i class="fas fa-file-invoice-dollar menu-icon"></i> Payment Management
                     </div>
                     <i class="uil uil-angle-down dropdown-icon"></i>
                 </button>
             </h2>
             <div id="billMenu" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    <a href="#"><i class="fas fa-credit-card"></i>All Payments</a>
-                    <a href="#"><i class="fas fa-file-alt"></i>Manage Bill</a>
-                    <a href="#"><i class="fas fa-hourglass-half"></i>Pending Payments</a>
+                    <a href="admin-manage-payments"><i class="fas fa-credit-card"></i>All Payments</a>
+                    <a href="sadmin-pending-payments.jsp"><i class="fas fa-file-alt"></i>Manage Pending Payments</a>
+                    <a href="admin-completed-payments.jp"><i class="fas fa-hourglass-half"></i>Completed Payments</a>
                 </div>
             </div>
         </div>
@@ -449,7 +449,7 @@
                 <div class="card-body">
                     <i class="fas fa-users fa-3x mb-3"></i>
                     <h5 class="card-title">Total Users</h5>
-                    <p class="card-text">1,200</p>
+                    <p class="card-text">25</p>
                 </div>
             </div>
         </div>
@@ -458,7 +458,7 @@
                 <div class="card-body">
                     <i class="fas fa-car fa-3x mb-3"></i>
                     <h5 class="card-title">Total Vehicles</h5>
-                    <p class="card-text">500</p>
+                    <p class="card-text">50</p>
                 </div>
             </div>
         </div>
@@ -467,7 +467,7 @@
                 <div class="card-body">
                     <i class="fas fa-user-tie fa-3x mb-3"></i>
                     <h5 class="card-title">Total Drivers</h5>
-                    <p class="card-text">300</p>
+                    <p class="card-text">30</p>
                 </div>
             </div>
         </div>
@@ -476,7 +476,7 @@
                 <div class="card-body">
                     <i class="fas fa-dollar-sign fa-3x mb-3"></i>
                     <h5 class="card-title">Total Income</h5>
-                    <p class="card-text">$50,000</p>
+                    <p class="card-text">$3,125</p>
                 </div>
             </div>
         </div>
@@ -487,7 +487,7 @@
         <div class="col-md-4">
             <a href="manage-vehicle" class="text-decoration-none" style="color: inherit;">
                 <button class="btn w-100 mb-3">
-                    <i class="fas fa-id-badge"></i> Vehicle
+                    <i class="fas fa-id-badge"></i> Vehicle Activities
                 </button>
             </a>
             <button class="btn w-100"><i class="fas fa-user-plus"></i>Add User</button>
@@ -498,15 +498,23 @@
                     <i class="fas fa-id-badge"></i> Driver
                 </button>
             </a>
-            <a href="view-confirmed-bookings" class="text-decoration-none" style="color: inherit;">
+            <a href="manage-bookings" class="text-decoration-none" style="color: inherit;">
                 <button class="btn w-100 mb-3">
-                    <i class="fas fa-id-badge"></i> booking
+                    <i class="fas fa-id-badge"></i> Booking Activities
                 </button>
             </a>
         </div>
         <div class="col-md-4">
-            <button class="btn w-100 mb-3"><i class="fas fa-file-invoice-dollar"></i>Bill Payment</button>
-            <button class="btn w-100"><i class="fas fa-percent"></i>Apply Discount</button>
+            <a href="admin-manage-payments" class="text-decoration-none" style="color: inherit;">
+                <button class="btn w-100 mb-3">
+                    <i class="fas fa-id-badge"></i> Manage Payments
+                </button>
+            </a>
+            <a href="pricing-servlet" class="text-decoration-none" style="color: inherit;">
+                <button class="btn w-100 mb-3">
+                    <i class="fas fa-id-badge"></i> Manage Tax & Fare
+                </button>
+            </a>
         </div>
     </div>
 </div>
