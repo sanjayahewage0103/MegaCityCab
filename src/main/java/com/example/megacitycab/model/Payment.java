@@ -7,12 +7,19 @@ public class Payment {
     private int bookingId;
     private double amountPaid;
     private String paymentMethod; // "Card" or "Cash"
-    private String transactionId;
+    private String transactionId; // Optional, for card payments
     private String paymentStatus;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String vehicleType;
+    private String pickupLocation;
+    private String dropLocation;
+    private String date;
+    private String time;
+    private double finalAmount;
+    private String encryptedDetails;
 
-    // Getters and Setters
+
     public int getPaymentId() {
         return paymentId;
     }
@@ -75,5 +82,61 @@ public class Payment {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public String getPickupLocation() {
+        return pickupLocation;
+    }
+
+    public void setPickupLocation(String pickupLocation) {
+        this.pickupLocation = pickupLocation;
+    }
+
+    public String getDropLocation() {
+        return dropLocation;
+    }
+
+    public void setDropLocation(String dropLocation) {
+        this.dropLocation = dropLocation;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public double getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(double finalAmount) {
+        this.finalAmount = finalAmount;
+    }
+
+    public String getEncryptedDetails() {
+        return encryptedDetails;
+    }
+
+    public void setEncryptedDetails(String encryptedDetails) {
+        this.encryptedDetails = encryptedDetails;
     }
 }

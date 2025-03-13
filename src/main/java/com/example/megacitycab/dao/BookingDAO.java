@@ -1,6 +1,7 @@
 package com.example.megacitycab.dao;
 
 import com.example.megacitycab.model.Booking;
+import com.example.megacitycab.model.Payment;
 import com.example.megacitycab.util.DatabaseConnection;
 
 import java.sql.*;
@@ -558,5 +559,35 @@ public class BookingDAO {
             }
         }
         return bookings;
+    }
+
+    public List<Payment> getCompletedPayments(int customerId) throws SQLException {
+        String query = """
+        SELECT b.booking_id, b.pickup_location, b.drop_location, b.date, b.time,
+               b.final_amount, p.payment_method, p.transaction_id
+        FROM bookings b
+        LEFT JOIN payments p ON b.booking_id = p.booking_id
+        WHERE b.customer_id = ? AND p.payment_status = 'Success'
+    """;
+        List<Payment> completedPayments = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setBookingId(rs.getInt("booking_id"));
+                payment.setPickupLocation(rs.getString("pickup_location"));
+                payment.setDropLocation(rs.getString("drop_location"));
+                payment.setDate(rs.getString("date"));
+                payment.setTime(rs.getString("time"));
+                payment.setFinalAmount(rs.getDouble("final_amount"));
+                payment.setPaymentMethod(rs.getString("payment_method"));
+                payment.setTransactionId(rs.getString("transaction_id"));
+                completedPayments.add(payment);
+            }
+        }
+        return completedPayments;
     }
 }
