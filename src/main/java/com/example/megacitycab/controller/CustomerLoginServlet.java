@@ -34,7 +34,7 @@ public class CustomerLoginServlet extends HttpServlet {
             int customerId = customerDAO.getCustomerIdByEmail(email);
             session.setAttribute("customerId", customerId);
 
-            response.sendRedirect("customer-dashboard.jsp?message=Login successful!");
+            response.sendRedirect("customer-dashboard?message=Login successful!");
         } else {
             response.sendRedirect("login.jsp?error=Invalid email or password.");
         }

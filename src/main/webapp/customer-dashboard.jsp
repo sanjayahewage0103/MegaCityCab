@@ -1,4 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session == null || session.getAttribute("email") == null) {
+        response.sendRedirect("login.jsp?error=You must log in to access the dashboard.");
+        return;
+    }
+
+    String email = (String) session.getAttribute("email");
+    String firstName = "John"; // Replace with actual DB query result
+    String lastName = "Doe"; // Replace with actual DB query result
+    String userInitial = firstName.substring(0, 1) + lastName.substring(0, 1);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -443,18 +456,7 @@
     </style>
 </head>
 <body>
-<%
-    if (session == null || session.getAttribute("email") == null) {
-        response.sendRedirect("login.jsp?error=You must log in to access the dashboard.");
-        return;
-    }
 
-    String email = (String) session.getAttribute("email");
-    // For demonstration, we'll add more mock user information
-    String firstName = "John"; // In real app, get from session or DB
-    String lastName = "Doe"; // In real app, get from session or DB
-    String userInitial = firstName.substring(0, 1);
-%>
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
@@ -539,14 +541,14 @@
             <p>Here's what's happening with your account today.</p>
         </div>
 
-        <!-- Stats Cards -->
+        <!-- Statistics Cards -->
         <div class="row g-4 mb-4">
             <div class="col-md-6 col-lg-3">
                 <div class="stats-card">
                     <div class="stats-icon bg-orange">
                         <i class="fas fa-taxi"></i>
                     </div>
-                    <h3 class="stats-number">12</h3>
+                    <h3 class="stats-number"><%= request.getAttribute("totalRides") %></h3>
                     <p class="stats-text">Total Rides</p>
                 </div>
             </div>
@@ -555,8 +557,8 @@
                     <div class="stats-icon bg-blue">
                         <i class="fas fa-route"></i>
                     </div>
-                    <h3 class="stats-number">186</h3>
-                    <p class="stats-text">Total Distance (km)</p>
+                    <h3 class="stats-number"><%= request.getAttribute("totalDistance") %> km</h3>
+                    <p class="stats-text">Total Distance Traveled</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3">
@@ -564,7 +566,7 @@
                     <div class="stats-icon bg-green">
                         <i class="fas fa-wallet"></i>
                     </div>
-                    <h3 class="stats-number">₨3,540</h3>
+                    <h3 class="stats-number">₨<%= request.getAttribute("totalSavings") %></h3>
                     <p class="stats-text">Saved with Promos</p>
                 </div>
             </div>
@@ -583,7 +585,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="card-title">Recent Rides</h5>
-                <a href="booking-activity.jsp" class="btn btn-primary btn-sm">View All</a>
+                <a href="customer-booking-manage" class="btn btn-primary btn-sm">View All</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -599,38 +601,42 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <%
+                            List<Map<String, Object>> recentBookings = (List<Map<String, Object>>) request.getAttribute("recentBookings");
+                            if (recentBookings != null && !recentBookings.isEmpty()) {
+                                for (Map<String, Object> booking : recentBookings) {
+                                    String statusClass = "";
+                                    String statusText = (String) booking.get("status");
+                                    switch (statusText.toLowerCase()) {
+                                        case "completed":
+                                            statusClass = "status-completed";
+                                            break;
+                                        case "cancelled":
+                                            statusClass = "status-cancelled";
+                                            break;
+                                        case "scheduled":
+                                            statusClass = "status-scheduled";
+                                            break;
+                                        default:
+                                            statusClass = "status-pending";
+                                    }
+                        %>
                         <tr>
-                            <td>12 Mar, 2025</td>
-                            <td>Colombo Fort</td>
-                            <td>Galle Face Green</td>
-                            <td>₨650</td>
-                            <td><span class="ride-status status-completed">Completed</span></td>
-                            <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
+                            <td><%= booking.get("date") %></td>
+                            <td><%= booking.get("fromLocation") %></td>
+                            <td><%= booking.get("toLocation") %></td>
+                            <td>₨<%= booking.get("amount") %></td>
+                            <td><span class="ride-status <%= statusClass %>"><%= statusText %></span></td>
+                            <td><a href="customer-booking-manage" class="btn btn-sm btn-outline-primary">Details</a></td>
                         </tr>
+                        <%
+                            }
+                        } else {
+                        %>
                         <tr>
-                            <td>10 Mar, 2025</td>
-                            <td>Negombo</td>
-                            <td>Bandaranaike Airport</td>
-                            <td>₨2,450</td>
-                            <td><span class="ride-status status-completed">Completed</span></td>
-                            <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
+                            <td colspan="6" class="text-center">No recent rides found.</td>
                         </tr>
-                        <tr>
-                            <td>08 Mar, 2025</td>
-                            <td>Galle Face Hotel</td>
-                            <td>Dutch Hospital Shopping Precinct</td>
-                            <td>₨720</td>
-                            <td><span class="ride-status status-cancelled">Cancelled</span></td>
-                            <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
-                        </tr>
-                        <tr>
-                            <td>15 Mar, 2025</td>
-                            <td>Cinnamon Grand</td>
-                            <td>National Museum</td>
-                            <td>₨850</td>
-                            <td><span class="ride-status status-scheduled">Scheduled</span></td>
-                            <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
-                        </tr>
+                        <% } %>
                         </tbody>
                     </table>
                 </div>

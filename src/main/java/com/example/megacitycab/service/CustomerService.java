@@ -5,9 +5,19 @@ import com.example.megacitycab.model.Customer;
 import com.example.megacitycab.factory.UserFactory;
 import com.example.megacitycab.util.PasswordHasher;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 public class CustomerService {
     private CustomerDAO customerDAO;
 
+    // Constructor that accepts a CustomerDAO object
+    public CustomerService(CustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
+    }
+
+    // Default constructor (if needed for other use cases)
     public CustomerService() {
         this.customerDAO = new CustomerDAO();
     }
@@ -67,5 +77,23 @@ public class CustomerService {
     // Password validation
     private boolean isValidPassword(String password) {
         return password != null && password.length() >= 6;
+    }
+
+    public int getTotalRides(int customerId) throws SQLException {
+        return customerDAO.getTotalRides(customerId);
+    }
+
+    // Fetch total distance traveled for a specific customer
+    public double getTotalDistance(int customerId) throws SQLException {
+        return customerDAO.getTotalDistance(customerId);
+    }
+
+    // Fetch total savings with promos for a specific customer
+    public double getTotalSavings(int customerId) throws SQLException {
+        return customerDAO.getTotalSavings(customerId);
+    }
+
+    public List<Map<String, Object>> getRecentBookings(int customerId) throws SQLException {
+        return customerDAO.getRecentBookings(customerId);
     }
 }

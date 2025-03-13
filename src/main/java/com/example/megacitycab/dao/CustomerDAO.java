@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CustomerDAO {
     // Method to register a new customer
@@ -85,6 +89,98 @@ public class CustomerDAO {
             System.err.println("Error retrieving customerId: " + e.getMessage());
         }
         return -1;
+    }
+
+
+    public int getTotalRides(int customerId) throws SQLException {
+        String query = """
+            SELECT COUNT(*) AS total_rides
+            FROM bookings
+            WHERE customer_id = ? AND status = 'Confirmed'
+        """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("total_rides");
+            }
+        }
+        return 0;
+    }
+
+    // Fetch total distance traveled for a specific customer
+    public double getTotalDistance(int customerId) throws SQLException {
+        String query = """
+            SELECT SUM(total_distance) AS total_distance
+            FROM bookings
+            WHERE customer_id = ? AND status = 'Confirmed'
+        """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("total_distance");
+            }
+        }
+        return 0.0;
+    }
+
+    // Fetch total savings with promos for a specific customer
+    public double getTotalSavings(int customerId) throws SQLException {
+        String query = """
+            SELECT SUM(discount_amount) AS total_savings
+            FROM bookings
+            WHERE customer_id = ? AND promo_code_used IS NOT NULL
+        """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("total_savings");
+            }
+        }
+        return 0.0;
+    }
+
+    public List<Map<String, Object>> getRecentBookings(int customerId) throws SQLException {
+        String query = """
+        SELECT 
+            date, 
+            pickup_location AS from_location, 
+            drop_location AS to_location, 
+            final_amount, 
+            status 
+        FROM 
+            bookings 
+        WHERE 
+            customer_id = ? 
+        ORDER BY 
+            date DESC 
+        LIMIT 5
+    """;
+        List<Map<String, Object>> recentBookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Object> booking = new HashMap<>();
+                booking.put("date", rs.getDate("date"));
+                booking.put("fromLocation", rs.getString("from_location"));
+                booking.put("toLocation", rs.getString("to_location"));
+                booking.put("amount", rs.getDouble("final_amount"));
+                booking.put("status", rs.getString("status"));
+                recentBookings.add(booking);
+            }
+        }
+        return recentBookings;
     }
 
 }
