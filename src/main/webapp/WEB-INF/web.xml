@@ -186,5 +186,14 @@
         <url-pattern>/complete-booking</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CustomerBookingManageServlet</servlet-name>
+        <servlet-class>com.example.megacitycab.controller.CustomerBookingManageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CustomerBookingManageServlet</servlet-name>
+        <url-pattern>/customer-booking-manage</url-pattern>
+    </servlet-mapping>
 
 </web-app>

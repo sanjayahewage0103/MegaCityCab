@@ -475,7 +475,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="booking-activity.jsp">
+                <a href="customer-booking-manage">
                     <i class="fas fa-history"></i> My Rides
                 </a>
             </li>

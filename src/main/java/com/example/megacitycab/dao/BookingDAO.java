@@ -244,53 +244,6 @@ public class BookingDAO {
         return bookings;
     }
 
-    // Fetch completed bookings with details
-    public List<Booking> getCompletedBookingsWithDetails() throws SQLException {
-        String query = """
-        SELECT b.booking_id, b.customer_id, va.driver_id, p.payment_id, p.payment_method,
-               b.date, b.time, c.first_name AS customer_name, d.first_name AS driver_name,
-               v.vehicle_number, v.type AS vehicle_type, b.pickup_location, b.drop_location,
-               b.total_distance, b.final_amount
-        FROM bookings b
-        LEFT JOIN payments p ON b.booking_id = p.booking_id
-        LEFT JOIN vehicle_assignments va ON b.booking_id = va.booking_id
-        LEFT JOIN vehicle v ON va.vehicle_id = v.vehicle_id
-        LEFT JOIN drivers d ON va.driver_id = d.driver_id
-        LEFT JOIN customers c ON b.customer_id = c.customer_id
-        WHERE b.status = 'Completed'
-    """;
-        System.out.println("Executing query: " + query); // Log the query
-        List<Booking> bookings = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                Booking booking = new Booking();
-                booking.setBookingId(rs.getInt("booking_id"));
-                booking.setCustomerId(rs.getInt("customer_id"));
-                booking.setDriverId(rs.getInt("driver_id"));
-                booking.setPaymentId(rs.getInt("payment_id"));
-                booking.setPaymentMethod(rs.getString("payment_method"));
-                booking.setDate(rs.getString("date"));
-                booking.setTime(rs.getString("time"));
-                booking.setCustomerName(rs.getString("customer_name"));
-                booking.setDriverName(rs.getString("driver_name"));
-                booking.setVehicleNumber(rs.getString("vehicle_number"));
-                booking.setVehicleType(rs.getString("vehicle_type"));
-                booking.setPickupLocation(rs.getString("pickup_location"));
-                booking.setDropLocation(rs.getString("drop_location"));
-                booking.setTotalDistance(rs.getDouble("total_distance"));
-                booking.setFinalAmount(rs.getDouble("final_amount"));
-                bookings.add(booking);
-            }
-            System.out.println("Fetched " + bookings.size() + " completed bookings."); // Log the result
-        } catch (SQLException e) {
-            System.out.println("Error executing query: " + e.getMessage()); // Log errors
-            throw e;
-        }
-        return bookings;
-    }
 
     // Fetch completed bookings
     public List<Booking> getCompletedBookings() throws SQLException {
@@ -381,6 +334,226 @@ public class BookingDAO {
                 booking.setDate(rs.getString("date"));
                 booking.setTime(rs.getString("time"));
                 booking.setStatus(rs.getString("status"));
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
+
+    public List<Booking> getPendingBookings(int customerId) throws SQLException {
+        String query = """
+            SELECT booking_id, vehicle_type, pickup_location, drop_location, date, time,
+                   final_amount, payment_method
+            FROM bookings
+            WHERE customer_id = ? AND status = 'Pending'
+        """;
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                booking.setPaymentMethod(rs.getString("payment_method"));
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
+
+    public List<Booking> getConfirmedBookings(int customerId) throws SQLException {
+        String query = """
+            SELECT b.booking_id, b.vehicle_type, b.pickup_location, b.drop_location,
+                   b.date, b.time, b.final_amount, b.payment_method, p.payment_status,
+                   v.vehicle_number, d.first_name, d.last_name
+            FROM bookings b
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            LEFT JOIN vehicle_assignments va ON b.booking_id = va.booking_id
+            LEFT JOIN vehicle v ON va.vehicle_id = v.vehicle_id
+            LEFT JOIN drivers d ON va.driver_id = d.driver_id
+            WHERE b.customer_id = ? AND b.status = 'Confirmed'
+        """;
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                booking.setPaymentMethod(rs.getString("payment_method"));
+                booking.setPaymentStatus(rs.getString("payment_status"));
+                booking.setVehicleNumber(rs.getString("vehicle_number"));
+                booking.setDriverName(rs.getString("first_name") + " " + rs.getString("last_name"));
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
+
+    public void updatePaymentMethod(int bookingId, String paymentMethod) throws SQLException {
+        String query = "UPDATE bookings SET payment_method = ? WHERE booking_id = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, paymentMethod);
+            stmt.setInt(2, bookingId);
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Booking> getCancelledBookings(int customerId) throws SQLException {
+        String query = """
+            SELECT b.booking_id, b.vehicle_type, b.pickup_location, b.drop_location,
+                   b.date, b.time, b.final_amount, b.payment_method, p.payment_status,
+                   v.vehicle_number, d.first_name, d.last_name
+            FROM bookings b
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            LEFT JOIN vehicle_assignments va ON b.booking_id = va.booking_id
+            LEFT JOIN vehicle v ON va.vehicle_id = v.vehicle_id
+            LEFT JOIN drivers d ON va.driver_id = d.driver_id
+            WHERE b.customer_id = ? AND b.status = 'Cancelled'
+        """;
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                booking.setPaymentMethod(rs.getString("payment_method"));
+                booking.setPaymentStatus(rs.getString("payment_status"));
+                booking.setVehicleNumber(rs.getString("vehicle_number"));
+                booking.setDriverName(rs.getString("first_name") + " " + rs.getString("last_name"));
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
+
+    public List<Booking> getCompletedBookings(int customerId) throws SQLException {
+        String query = """
+            SELECT b.booking_id, p.payment_id, b.date, b.time, b.status,
+                   b.pickup_location, b.drop_location, b.final_amount
+            FROM bookings b
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            WHERE b.customer_id = ? AND b.status = 'Completed'
+        """;
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setPaymentId(rs.getInt("payment_id"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setStatus(rs.getString("status"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
+
+    // Fetch detailed booking information
+    public Booking getCompletedBookingDetails(int bookingId) throws SQLException {
+        String query = """
+            SELECT c.name AS customer_name, c.contact AS customer_mobile,
+                   b.date, b.time, b.pickup_location, b.drop_location, b.total_distance,
+                   b.base_price, b.tax_amount, b.discount_amount, b.final_amount,
+                   b.vehicle_type, b.num_passengers, d.first_name, d.last_name,
+                   v.vehicle_number, v.color, p.payment_method, p.transaction_id
+            FROM bookings b
+            LEFT JOIN customer c ON b.customer_id = c.customer_id
+            LEFT JOIN vehicle_assignments va ON b.booking_id = va.booking_id
+            LEFT JOIN drivers d ON va.driver_id = d.driver_id
+            LEFT JOIN vehicle v ON va.vehicle_id = v.vehicle_id
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            WHERE b.booking_id = ?
+        """;
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, bookingId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Booking booking = new Booking();
+                booking.setCustomerName(rs.getString("customer_name"));
+                booking.setCustomerMobile(rs.getString("customer_mobile"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setTotalDistance(rs.getDouble("total_distance"));
+                booking.setBasePrice(rs.getDouble("base_price"));
+                booking.setTaxAmount(rs.getDouble("tax_amount"));
+                booking.setDiscountAmount(rs.getDouble("discount_amount"));
+                booking.setFinalAmount(rs.getDouble("final_amount"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setNumPassengers(rs.getInt("num_passengers"));
+                booking.setDriverName(rs.getString("first_name") + " " + rs.getString("last_name"));
+                booking.setVehicleNumber(rs.getString("vehicle_number"));
+                booking.setVehicleColor(rs.getString("color"));
+                booking.setPaymentMethod(rs.getString("payment_method"));
+                booking.setTransactionId(rs.getString("transaction_id"));
+                return booking;
+            }
+        }
+        return null;
+    }
+
+    public List<Booking> getAllBookingsForCustomer(int customerId) throws SQLException {
+        String query = """
+            SELECT b.booking_id, b.vehicle_type, b.pickup_location, b.drop_location,
+                   b.date, b.time, b.status, p.payment_status
+            FROM bookings b
+            LEFT JOIN payments p ON b.booking_id = p.booking_id
+            WHERE b.customer_id = ?
+        """;
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setVehicleType(rs.getString("vehicle_type"));
+                booking.setPickupLocation(rs.getString("pickup_location"));
+                booking.setDropLocation(rs.getString("drop_location"));
+                booking.setDate(rs.getString("date"));
+                booking.setTime(rs.getString("time"));
+                booking.setStatus(rs.getString("status"));
+                booking.setPaymentStatus(rs.getString("payment_status"));
                 bookings.add(booking);
             }
         }

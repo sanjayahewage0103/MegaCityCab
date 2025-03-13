@@ -24,17 +24,20 @@ public class Booking {
     private String paymentStatus;
     private String vehicleNumber;
     private String driverName;
-
     private int driverId;
     private int paymentId;
     private String customerName;
     private int vehicleId;
+    private String CustomerMobile;
+    private String vehicleColor;
+    private String transactionId;
 
     public Booking() {}
 
     public Booking(int customerId, String vehicleType, String pickupLocation, String dropLocation, double totalDistance,
                    String date, String time, int numPassengers, String promoCodeUsed, double basePrice,
-                   double taxAmount, double discountAmount, double finalAmount, String paymentMethod, String status) {
+                   double taxAmount, double discountAmount, double finalAmount, String paymentMethod, String status,
+                   String CustomerMobile, String vehicleColor, String transactionId) {
         this.customerId = customerId;
         this.vehicleType = vehicleType;
         this.pickupLocation = pickupLocation;
@@ -50,7 +53,9 @@ public class Booking {
         this.finalAmount = finalAmount;
         this.paymentMethod = paymentMethod;
         this.status = status;
-        this.vehicleId = vehicleId;
+        this.CustomerMobile = CustomerMobile;
+        this.vehicleColor = vehicleColor;
+        this.transactionId = transactionId;
     }
 
 
@@ -254,6 +259,30 @@ public class Booking {
         this.vehicleId = vehicleId;
     }
 
+    public String getCustomerMobile() {
+        return CustomerMobile;
+    }
+
+    public void setCustomerMobile(String CustomerMobile) {
+        this.CustomerMobile = CustomerMobile;
+    }
+
+    public String getVehicleColor() {
+        return vehicleColor;
+    }
+
+    public void setVehicleColor(String vehicleColor) {
+        this.vehicleColor = vehicleColor;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -281,6 +310,9 @@ public class Booking {
                 ", driverId=" + driverId +
                 ", paymentId=" + paymentId +
                 ", customerName='" + customerName + '\'' +
+                ", mobileNumber='" + CustomerMobile + '\'' +
+                ", vehicleColor='" + vehicleColor + '\'' +
+                ", transactionId='" + transactionId + '\'' +
                 '}';
     }
 }

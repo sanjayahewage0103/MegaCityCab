@@ -90,7 +90,6 @@ public class BookingService {
         return bookingDAO.getConfirmedBookingCount();
     }
 
-    // Method to count cancelled bookings
     public int getCancelledBookingCount() throws SQLException {
         return bookingDAO.getCancelledBookingCount();
     }
@@ -103,7 +102,6 @@ public class BookingService {
         return bookingDAO.getAllBookingsByStatus(status);
     }
 
-    // Method to fetch booking details by ID
     public Booking getBookingDetailsById(int bookingId) throws SQLException {
         return bookingDAO.getBookingDetailsById(bookingId);
     }
@@ -116,8 +114,8 @@ public class BookingService {
         return bookingDAO.getCancelledBookingsWithDetails();
     }
 
-    public List<Booking> getCompletedBookingsWithDetails() throws SQLException {
-        return bookingDAO.getCompletedBookingsWithDetails();
+    public List<Booking> getPendingBookings(int customerId) throws SQLException {
+        return bookingDAO.getPendingBookings(customerId);
     }
 
     public List<Booking> getCompletedBookings() throws SQLException {
@@ -126,5 +124,29 @@ public class BookingService {
 
     public Booking getActivityDetails(int bookingId) throws SQLException {
         return bookingDAO.getActivityDetails(bookingId);
+    }
+
+    public List<Booking> getConfirmedBookings(int customerId) throws SQLException {
+        return bookingDAO.getConfirmedBookings(customerId);
+    }
+
+    public void updatePaymentMethod(int bookingId, String paymentMethod) throws SQLException {
+        bookingDAO.updatePaymentMethod(bookingId, paymentMethod);
+    }
+
+    public List<Booking> getCancelledBookings(int customerId) throws SQLException {
+        return bookingDAO.getCancelledBookings(customerId);
+    }
+
+    public List<Booking> getCompletedBookings(int customerId) throws SQLException {
+        return bookingDAO.getCompletedBookings(customerId);
+    }
+
+    public Booking getCompletedBookingDetails(int bookingId) throws SQLException {
+        return bookingDAO.getCompletedBookingDetails(bookingId);
+    }
+
+    public List<Booking> getAllBookingsForCustomer(int customerId) throws SQLException {
+        return bookingDAO.getAllBookingsForCustomer(customerId);
     }
 }
