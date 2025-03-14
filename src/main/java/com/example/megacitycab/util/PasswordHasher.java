@@ -10,9 +10,7 @@ public class PasswordHasher {
         try {
             // Create a MessageDigest instance for SHA-256
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            // Compute the hash as bytes
             byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            // Convert the byte array to a hexadecimal string
             StringBuilder hexString = new StringBuilder();
             for (byte b : hashBytes) {
                 String hex = Integer.toHexString(0xff & b);

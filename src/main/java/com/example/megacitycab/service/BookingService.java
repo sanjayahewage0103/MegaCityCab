@@ -28,12 +28,10 @@ public class BookingService {
         return bookingDAO.getAllBookings();
     }
 
-    // Method to update booking status
     public void updateBookingStatus(int bookingId, String status) throws SQLException {
         bookingDAO.updateBookingStatus(bookingId, status);
     }
 
-    // Method to cancel a booking
     public void cancelBooking(int bookingId) throws SQLException {
         updateBookingStatus(bookingId, "Cancelled");
     }

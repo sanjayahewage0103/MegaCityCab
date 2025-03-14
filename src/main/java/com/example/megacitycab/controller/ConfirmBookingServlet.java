@@ -72,7 +72,6 @@ public class ConfirmBookingServlet extends HttpServlet {
             payment.setPaymentMethod(paymentMethod);
             payment.setPaymentStatus("Pending"); // Payment status is initially "Pending"
 
-            // Save the payment details to the payments table
             paymentDAO.savePayment(payment);
 
             // Redirect to the confirmation page

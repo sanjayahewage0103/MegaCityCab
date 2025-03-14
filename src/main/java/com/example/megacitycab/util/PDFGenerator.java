@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class PDFGenerator {
     public static byte[] generateReceipt(Booking booking) throws IOException {
-        // Create a ByteArrayOutputStream to hold the PDF content
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {

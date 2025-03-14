@@ -20,28 +20,17 @@ public class PaymentService {
         return paymentDAO.getPendingPayments(customerId);
     }
 
-    public void updatePaymentMethod(int bookingId, String paymentMethod) throws SQLException {
-        paymentDAO.updatePaymentMethod(bookingId, paymentMethod);
-    }
 
     public void processPayment(int bookingId, String cardDetails) throws SQLException {
         if (cardDetails == null || cardDetails.isEmpty()) {
             throw new IllegalArgumentException("Card details cannot be null or empty.");
         }
-
-        // Generate a unique transaction ID
         String transactionId = generateUniqueTransactionId();
-
-        // Encrypt card details
         String encryptedCardDetails = Base64.getEncoder().encodeToString(cardDetails.getBytes());
-
-        // Save encrypted details and update payment status
         paymentDAO.processPayment(bookingId, encryptedCardDetails, transactionId);
     }
 
-    // Method to generate a unique transaction ID
     private String generateUniqueTransactionId() {
-        // Use UUID to generate a unique identifier
         return "TXN-" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 12).toUpperCase();
     }
 

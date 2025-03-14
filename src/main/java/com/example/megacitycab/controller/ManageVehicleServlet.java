@@ -95,7 +95,6 @@ public class ManageVehicleServlet extends HttpServlet {
             vehicle.setStatus(request.getParameter("status"));
 
             if ("add".equals(action)) {
-                // Add New Vehicle
                 boolean isAdded = vehicleService.addVehicle(vehicle);
                 if (isAdded) {
                     request.setAttribute("message", "Vehicle added successfully!");
@@ -103,7 +102,6 @@ public class ManageVehicleServlet extends HttpServlet {
                     request.setAttribute("error", "Failed to add the vehicle.");
                 }
             } else if ("update".equals(action)) {
-                // Update Existing Vehicle
                 vehicle.setVehicleId(Integer.parseInt(request.getParameter("vehicleId")));
                 boolean isUpdated = vehicleService.updateVehicle(vehicle);
                 if (isUpdated) {
